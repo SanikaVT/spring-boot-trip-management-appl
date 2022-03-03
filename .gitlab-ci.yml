@@ -67,7 +67,7 @@ code_quality:
   script:
     - wget -O DesigniteJava.jar https://www.dropbox.com/s/hrfuiesdb9o6cg5/DesigniteJava.jar?dl=1
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca”
-    - 'eval "$UPLOAD_QUALITY_REPORT"'
+    - eval "$UPLOAD_QUALITY_REPORT"
   only:
     refs:
       - feature_configuration
