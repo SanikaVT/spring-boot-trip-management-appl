@@ -8,7 +8,7 @@ cache:
 
 before_script:
   - apt-get update
-  - ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+  - ln -snf /usr/share/zoneinfo/$``CONTAIN``ER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
   - apt-get --yes --force-yes install wget curl maven git
 
 stages:
@@ -83,7 +83,7 @@ code_quality:
     - pwd
     - ls -lrth
     - ls Designite_output/
-    - ls -lrth ~/.ssh
+#    - ls -lrth ~/.ssh
     - echo "$CI_COMMIT_REF_NAME"
     - zip -r ${CI_COMMIT_SHORT_SHA}.zip . -i Designite_output/*.xml
     - ls -lrth ${CI_COMMIT_SHORT_SHA}.zip
