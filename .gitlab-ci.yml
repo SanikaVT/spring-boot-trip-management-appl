@@ -7,8 +7,8 @@ cache:
     - target/
 
 before_script:
-  - apt-get update && DEBIAN_FRONTEND=noninteractive
   - ln -snf /usr/share/zoneinfo/$``CONTAIN``ER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+  - apt-get update
   - apt-get --yes --force-yes install wget curl maven git
 
 stages:
