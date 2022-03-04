@@ -6,10 +6,10 @@ cache:
     - .m2/repository/Trip_Management_System_Group_16/
     - target/
 
-#before_script:
-#  - apt-get update
-#  - ln -snf /usr/share/zoneinfo/$``CONTAIN``ER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
-#  - apt-get --yes --force-yes install wget curl maven git
+before_script:
+  - apt-get update
+  - ln -snf /usr/share/zoneinfo/$``CONTAIN``ER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+  - apt-get --yes --force-yes install wget curl maven git
 
 stages:
   - build
@@ -74,7 +74,7 @@ code_quality:
   script:
     - wget -O DesigniteJava.jar https://www.dropbox.com/s/hrfuiesdb9o6cg5/DesigniteJava.jar?dl=1
     - java -jar DesigniteJava.jar -i . -o "Designite_output/" -f XML
-#    - eval "$UPLOAD_QUALITY_REPORT"
+    - eval "$UPLOAD_QUALITY_REPORT"
   after_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
