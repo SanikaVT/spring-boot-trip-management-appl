@@ -7,8 +7,8 @@ cache:
     - target/
 
 before_script:
-  - ln -snf /usr/share/zoneinfo/$``CONTAIN``ER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
   - apt-get update
+  - ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
   - apt-get --yes --force-yes install wget curl maven git
 
 stages:
@@ -61,32 +61,13 @@ test:
       - main
 
 code_quality:
-#  image: maven:latest
   stage: code_quality
-#  tags:
-#    - ugrad
-#  before_script:
-#    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-#    - eval $(ssh-agent -s)
-#    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
   variables:
     UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY" -H "repository-link: $CI_PROJECT_URL" + -H "username:bn489600@dal.ca" -H "Content-Type: mulitpart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_IID&project_name=CSCI_5308_GROUP_16" -F "file=@Designite_output/DesigniteAnalysis.xml"'
   script:
     - wget -O DesigniteJava.jar https://www.dropbox.com/s/hrfuiesdb9o6cg5/DesigniteJava.jar?dl=1
-    - java -jar DesigniteJava.jar -i . -o "Designite_output/" -f XML
-    - eval "$UPLOAD_QUALITY_REPORT"
-  after_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
-    - pwd
-    - ls -lrth
-    - ls Designite_output/
-#    - ls -lrth ~/.ssh
-    - echo "$CI_COMMIT_REF_NAME"
-    - zip -r ${CI_COMMIT_SHORT_SHA}.zip . -i Designite_output/*.xml
-    - ls -lrth ${CI_COMMIT_SHORT_SHA}.zip
-    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${PROD_DIR}/${CI_COMMIT_SHORT_SHA}_xml_file.zip"
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
+    - 'eval "$UPLOAD_QUALITY_REPORT"'
   only:
     refs:
       - feature_configuration
@@ -110,7 +91,7 @@ deploy-prod:
     - apt-get install -y ruby-dev
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
-#TODO: Add Production App Environment Variables
+  #TODO: Add Production App Environment Variables
   only:
     - main
 
