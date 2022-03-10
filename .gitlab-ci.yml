@@ -27,7 +27,6 @@ build:
       - feature_backend
       - develop
       - merge_requests
-      - heroku_configuration
       - main
 
 # test stage will compile the code and run all the unit tests present in the
@@ -50,7 +49,6 @@ test:
       - feature_backend
       - develop
       - merge_requests
-      - heroku_configuration
       - main
 
 deploy-prod:
@@ -84,4 +82,4 @@ deploy:
     - gem install dpl
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
   only:
-    - heroku_configuration
+    - develop
