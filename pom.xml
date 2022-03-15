@@ -83,11 +83,20 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.5.2</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.apache.tomcat.embed</groupId>-->
-<!--			<artifactId>tomcat-embed-websocket</artifactId>-->
-<!--			<version>8.5.11</version>-->
-<!--		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+
+		<!--		<dependency>-->
+		<!--			<groupId>org.apache.tomcat.embed</groupId>-->
+		<!--			<artifactId>tomcat-embed-websocket</artifactId>-->
+		<!--			<version>8.5.11</version>-->
+		<!--		</dependency>-->
 	</dependencies>
 
 	<build>
