@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <title>Dashboard - Trip Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/styles/styles.css}" />
+    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</head>
+<body class="sb-nav-toggled">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="@{owner-dashboard}">Trip Management</a>
+    <!-- Sidebar Toggle-->
+    <!--            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" href="#!" id="sidebarToggle"><i class="fas fa-bars"></i></button>-->
+    <!-- Navbar Search-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input aria-describedby="btnNavbarSearch" aria-label="Search for..." class="form-control" placeholder="Search for..." type="text" />
+            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <label class="text-light" th:text="${vehicleOwner.vehicleowner_fname}" ></label>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+
+        <li class="nav-item dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
+            <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="#!">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<!--        <div id="layoutSidenav">-->
+<!--            <div id="layoutSidenav_nav" >-->
+<!--                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">-->
+<!--                    <div class="sb-sidenav-menu">-->
+<!--                        <div class="nav">-->
+<!--                            <div class="sb-sidenav-menu-heading">Core</div>-->
+<!--                            <a class="nav-link" href="index.html">-->
+<!--                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>-->
+<!--                                Dashboard-->
+<!--                            </a>-->
+<!--                            <div class="sb-sidenav-menu-heading">Interface</div>-->
+<!--                            <a aria-controls="collapseLayouts" aria-expanded="false" class="nav-link collapsed" data-bs-target="#collapseLayouts" data-bs-toggle="collapse" href="#">-->
+<!--                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>-->
+<!--                                Layouts-->
+<!--                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>-->
+<!--                            </a>-->
+<!--                            <div aria-labelledby="headingOne" class="collapse" data-bs-parent="#sidenavAccordion" id="collapseLayouts">-->
+<!--                                <nav class="sb-sidenav-menu-nested nav">-->
+<!--                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>-->
+<!--                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>-->
+<!--                                </nav>-->
+<!--                            </div>-->
+<!--                            <a aria-controls="collapsePages" aria-expanded="false" class="nav-link collapsed" data-bs-target="#collapsePages" data-bs-toggle="collapse" href="#">-->
+<!--                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>-->
+<!--                                Pages-->
+<!--                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>-->
+<!--                            </a>-->
+<!--                            <div aria-labelledby="headingTwo" class="collapse" data-bs-parent="#sidenavAccordion" id="collapsePages">-->
+<!--                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">-->
+<!--                                    <a aria-controls="pagesCollapseAuth" aria-expanded="false" class="nav-link collapsed" data-bs-target="#pagesCollapseAuth" data-bs-toggle="collapse" href="#">-->
+<!--                                        Authentication-->
+<!--                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>-->
+<!--                                    </a>-->
+<!--                                    <div aria-labelledby="headingOne" class="collapse" data-bs-parent="#sidenavAccordionPages" id="pagesCollapseAuth">-->
+<!--                                        <nav class="sb-sidenav-menu-nested nav">-->
+<!--                                            <a class="nav-link" th:href="@{login}">Login</a>-->
+<!--                                            <a class="nav-link" th:href="@{register}">Register</a>-->
+<!--                                            <a class="nav-link" href="password.html">Forgot Password</a>-->
+<!--                                        </nav>-->
+<!--                                    </div>-->
+<!--                                    <a aria-controls="pagesCollapseError" aria-expanded="false" class="nav-link collapsed" data-bs-target="#pagesCollapseError" data-bs-toggle="collapse" href="#">-->
+<!--                                        Error-->
+<!--                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>-->
+<!--                                    </a>-->
+<!--                                    <div aria-labelledby="headingOne" class="collapse" data-bs-parent="#sidenavAccordionPages" id="pagesCollapseError">-->
+<!--                                        <nav class="sb-sidenav-menu-nested nav">-->
+<!--                                            <a class="nav-link" th:href="@{401.html}">401 Page</a>-->
+<!--                                            <a class="nav-link" href="@{404.html}">404 Page</a>-->
+<!--                                            <a class="nav-link" href="@{500.html}">500 Page</a>-->
+<!--                                        </nav>-->
+<!--                                    </div>-->
+<!--                                </nav>-->
+<!--                            </div>-->
+<!--                            <div class="sb-sidenav-menu-heading">Addons</div>-->
+<!--                            <a class="nav-link" href="charts.html">-->
+<!--                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>-->
+<!--                                Charts-->
+<!--                            </a>-->
+<!--                            <a class="nav-link" href="tables.html">-->
+<!--                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>-->
+<!--                                Tables-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="sb-sidenav-footer">-->
+<!--                        <div class="small">Logged in as:</div>-->
+<!--                        <label class="form-check-label" th:text="${vehicleOwner.vehicleowner_fname}"></label>-->
+<!--                    </div>-->
+<!--                </nav>-->
+<!--            </div>-->
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Car Owner Dashboard</h1>
+            <div class="container-fluid">
+                <div class="row">
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Car Manager</li>
+                    </ol>
+                    <div class="col-md-6">
+                        <div class="col-xl-8 col-md-8 row-xl">
+                            <div class="card bg-primary text-white mb-6">
+                                <div class="card-body">Welcome</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
+                                    <button class="btn btn-primary" data-bs-target="#exampleModal" data-bs-toggle="modal" type="button">Add New Car</button>
+
+                                    <!-- Modal -->
+                                    <div aria-hidden="true" aria-labelledby="myLargeModalLabel" class="modal fade" id="exampleModal" role="dialog" style="display: none;" tabindex="-1">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="text-secondary">Add new car</h5>
+                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" th:action="@{/add-vehicle}" th:object="${vehicle}">
+                                                        <label class="text-secondary">Car Name:</label><br/>
+                                                        <input class="form-control" id="vehicle_name" name="vehicle_name" type="text">
+                                                        <label class="text-secondary">Number Plate:</label><br/>
+                                                        <input class="form-control" id="number_plate" name="number_plate" type="text">
+                                                        <label class="text-secondary">Type:</label><br/>
+                                                        <input class="form-control" id="type" name="type" type="text">
+                                                        <label class="text-secondary">Kms driven:</label><br/>
+                                                        <input class="form-control" id="kms_driven" name="kms_driven" type="text">
+                                                        <label class="text-secondary">Kms driven:</label><br/>
+                                                        <input class="form-control" id="available_seats" name="available_seats" type="text">
+                                                        <label class="text-secondary">fuel_economy:</label><br/>
+                                                        <input class="form-control" id="fuel_economy" name="fuel_economy" type="text">
+                                                        <br/>
+                                                        <input th:attr="name='vehicleowner_id'" th:value="${vehicleOwner.vehicleOwner_id}" type="hidden"/>
+                                                        <input class="btn btn-secondary" type="submit" value="Add Car Details" >
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        </div>
+
+                        <div class="col-xl-8 col-md-8">
+                            <div class="card bg-danger text-white mb-6">
+                                <div class="card-body">Mercedes G-Vagon</div>
+                                <div class="card-body">HR11AA4444</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6" th:each="vehicle: ${listOfVehicle}">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body" style="padding:2px 6px"><span th:text="${vehicle.vehicle_name}"></span></div>
+                                <div class="card-body" style="padding:2px 6px"><span th:text="${vehicle.number_plate}"></span></div>
+                                <div class="card-body" style="padding:2px 6px">Kms travelled: <span th:text="${vehicle.kms_driven}"></span></div>
+                                <div class="card-body" style="padding:2px 6px">Fuel Consumed: <span th:text="${vehicle.fuel_consumed}"></span></div>
+
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" th:onclick="javascript:alertShowdetails(\'' + ${vehicle}+ '\')">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <ol class="breadcrumb mb-6">
+                            <li class="breadcrumb-item active">Ride
+                                Share Manager</li>
+                        </ol>
+                        <div class="col-xl-8 col-md-8">
+                            <div class="card bg-primary text-white mb-6">
+                                <div class="card-body">Add New Ride</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
+                                    <button class="btn btn-primary" data-bs-target="#exampleModalride" data-bs-toggle="modal" type="button">Create New Ride</button>
+
+                                    <!-- Modal -->
+                                    <div aria-hidden="true" aria-labelledby="myLargeModalLabel" class="modal fade" id="exampleModalride" role="dialog" style="display: none;" tabindex="-1">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="text-secondary">Add new ride</h5>
+                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" th:action="@{/add-ride}" th:object="${ride}">
+                                                        <label class="text-secondary">Select Number Plate:</label><br/>
+                                                        <div class="dropdown" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" href="#!">Action</a>
+                                                            <a class="dropdown-item" href="#!">Another action</a>
+                                                            <a class="dropdown-item" href="#!">Something else here</a>
+                                                        </div>
+                                                        <label class="text-secondary">Source:</label><br/>
+                                                        <input class="form-control" id="source" name="type" type="text">
+                                                        <label class="text-secondary">Destination:</label><br/>
+                                                        <input class="form-control" id="destination" name="destination" type="text">
+                                                        <label class="text-secondary">Available seats:</label><br/>
+                                                        <input class="form-control" id="available_seats_ride" name="available_seats" type="text">
+                                                        <label class="text-secondary">Time:</label><br/>
+                                                        <input class="form-control" id="time" name="time" type="text">
+                                                        <label class="text-secondary">Distance:</label><br/>
+                                                        <input class="form-control" id="distance" name="distance" type="text">
+
+                                                        <br/>
+                                                        <input th:attr="name='vehicleowner_id'" th:value="${vehicleOwner.vehicleOwner_id}" type="hidden"/>
+                                                        <input class="btn btn-secondary" type="submit" value="Add Ride Details" >
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+
+                            <div class="card bg-danger text-white mb-6">
+                                <div class="card-body">Mercedes G-Vagon</div>
+                                <div class="card-body">HR11AA4444</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <label class="form-check-label" th:text="${vehicleOwner.vehicleowner_fname}"></label>
+                </div>
+                <div class="text-muted">Copyright &copy; Trip Management 2022</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+</div>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/scripts.js}" type="text/javascript"></script>
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="assets/demo/chart-area-demo.js"></script>
+<script src="assets/demo/chart-bar-demo.js"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+<script src="js/datatables-simple-demo.js"></script>
+</body>
+</html>
