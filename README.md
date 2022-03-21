@@ -12,13 +12,14 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 
 ## Features
 ```
-[] Login Module
-[] Fuel Economy Calculation Module
-[] Vehicle Management
-[] Notification Module
-[] Trip Analysis Module
-[] Ride-share Module
-[] Payment Module
+- [ ] Login Module
+- [ ] Fuel Economy Calculation Module
+- [ ] Vehicle Management
+- [ ] Notification Module
+- [ ] Trip Analysis Module
+- [ ] Ride-share Module
+- [ ] Payment Module
+
 ```
 
 ## Instructor: Dr. Tusha Sharma
