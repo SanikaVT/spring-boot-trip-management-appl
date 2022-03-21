@@ -69,7 +69,7 @@ code_quality:
     - echo "/$CI_PROJECT_PATH"
     - ls -lrth
 #    - java -jar DesigniteJava.jar -i . -o Designite_output -f XML
-    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca”
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - 'eval "$UPLOAD_QUALITY_REPORT"'
   only:
     refs:
