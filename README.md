@@ -1,4 +1,4 @@
-**# CSCI 5308 WINTER'22 GROUP16: TRIP_MANAGEMENT_APPLICATION**
+# **CSCI 5308 WINTER'22 GROUP16: TRIP_MANAGEMENT_APPLICATION**
 
 ![Quality Score](https://qscored.com/badge/f93c624b8f299bfbe2da741eab99399930bbe887d4bd2bfe0eba2bc2c94cb38d/score/) ![QScored Rank](https://qscored.com/badge/f93c624b8f299bfbe2da741eab99399930bbe887d4bd2bfe0eba2bc2c94cb38d/rank/)
 
