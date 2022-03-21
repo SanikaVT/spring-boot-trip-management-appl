@@ -6,8 +6,10 @@
 ## TRIP_MANAGEMENT_APPLICATION
 
 Team Members:
-```Benny Daniel
+```
+Benny Daniel
 Dharmay Sureja
 Prakrut Suthar
 Sanika Tamhankar
-Vatsal Yadav```
+Vatsal Yadav
+```
