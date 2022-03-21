@@ -11,7 +11,6 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 - The current parking feature does not utilize the parking spaces of private homes/units.
 
 ## Features
-```
 - [ ] Login Module
 - [ ] Fuel Economy Calculation Module
 - [ ] Vehicle Management
@@ -20,7 +19,6 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 - [ ] Ride-share Module
 - [ ] Payment Module
 
-```
 
 ## Instructor: Dr. Tusha Sharma
 ## Teaching Assistant (TA): Narendran Krishnakumar
