@@ -21,7 +21,7 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 
 
 ## Instructor
-``` Dr. Tusha Sharma ```
+``` Dr. Tushar Sharma ```
 
 ## Teaching Assistant (TA)
 ``` Narendran Krishnakumar ```
