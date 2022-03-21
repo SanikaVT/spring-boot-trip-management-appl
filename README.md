@@ -20,8 +20,11 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 - [ ] Payment Module
 
 
-## Instructor: Dr. Tusha Sharma
-## Teaching Assistant (TA): Narendran Krishnakumar
+## Instructor
+``` Dr. Tusha Sharma ```
+
+## Teaching Assistant (TA)
+``` Narendran Krishnakumar ```
 
 ## Team Members:
 ```
