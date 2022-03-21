@@ -80,6 +80,7 @@ code_quality:
       - merge_requests
       - code_quality_danny
       - heroku_configuration
+      - ride_share_benny
       - main
 
 deploy-prod:
@@ -114,3 +115,4 @@ deploy:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
   only:
     - heroku_configuration
+    - main
