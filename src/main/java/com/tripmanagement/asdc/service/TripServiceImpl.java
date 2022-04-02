@@ -1,6 +1,7 @@
 package com.tripmanagement.asdc.service;
 
 import java.util.Date;
+import java.util.Formatter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,15 +113,18 @@ public class TripServiceImpl implements TripService {
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				VehicleOwner vehicleOwner = vehicleOwnerDAO
 						.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id());
+				String start_time=trip.getStart_time().replace("T", " ");;
 				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
 				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
+				//TODO: COST to 2 dec and set
+				//trip.setCost(cost);
 				Ride ride = new Ride(trip, vehicle.getVehicle_id(), vehicle.getNumber_plate(),
 						vehicle.getFuel_economy(), vehicleOwner.getVehicleowner_fname(), vehicle.getVehicleowner_id(),
 						vehicleOwner.getPhone(), calculateCost(vehicle, trip), trip.getAvailable_seats());
 				if(trip.getSeats_remaining()>0)
 				{
 				String current_time = Utility.getCurrentTime();
-				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(trip.getStart_time());
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
 					rideList.add(ride);
