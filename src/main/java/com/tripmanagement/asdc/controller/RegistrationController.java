@@ -1,9 +1,6 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Customer;
-import com.tripmanagement.asdc.model.Ride;
-import com.tripmanagement.asdc.model.User;
-import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.model.*;
 import com.tripmanagement.asdc.service.*;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -46,35 +44,40 @@ public class RegistrationController {
 
     @PostMapping("/dashboard")
     public String userLogin(User user, HttpSession httpSession, Model model) {
-        String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
-        if (message.equalsIgnoreCase(ControllerStringMessages.INCORRECT_AUTH)){
-            httpSession.setAttribute("error_message", message);
-            return "login";
-        }
-        else {
-            if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
-                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
-                httpSession.setAttribute("vehicleOwner", vehicleOwner);
-                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
-                httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-                httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-                return "owner-dashboard";
-            }
-            else {
-                Customer customer = customerService.getCustomerByEmail(user.getEmail());
-                httpSession.setAttribute("source", "");
-                httpSession.setAttribute("destination", "");
-                httpSession.setAttribute("customer", customer);
+        if(registrationService.checkUserExistByEmail(user.getEmail())) {
+            String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
+            if (message.equalsIgnoreCase(ControllerStringMessages.INCORRECT_AUTH)) {
+                httpSession.setAttribute("error_message", message);
+                return "login";
+            } else {
+                if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
+                    VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
+                    httpSession.setAttribute("vehicleOwner", vehicleOwner);
+                    httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                    List<Trip> previousTripsForVehicleOwner = tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("previousRides", previousTripsForVehicleOwner);
+                    List<Trip> upcomingTripsForVehicleOwner = tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("upcomingRides", upcomingTripsForVehicleOwner);
+                    return "owner-dashboard";
+                } else {
+                    Customer customer = customerService.getCustomerByEmail(user.getEmail());
+                    httpSession.setAttribute("source", "");
+                    httpSession.setAttribute("destination", "");
+                    httpSession.setAttribute("customer", customer);
 
-                model.addAttribute("listOfRides", new ArrayList<Ride>());
-                httpSession.setAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id()));
+                    model.addAttribute("listOfRides", new ArrayList<Ride>());
+                    List<Booking> previousRidesForCustomer = bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("previousRides", previousRidesForCustomer);
 
-                httpSession.setAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id()));
-                httpSession.setAttribute("sourceList", tripService.getSources());
-                httpSession.setAttribute("destinationList", tripService.getDestinations());
-                return "customer-dashboard";
+                    List<Booking> upcomingRidesForCustomer = bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("upcomingRides", upcomingRidesForCustomer);
+                    httpSession.setAttribute("sourceList", tripService.getSources());
+                    httpSession.setAttribute("destinationList", tripService.getDestinations());
+                    return "customer-dashboard";
+                }
             }
         }
+        return "login";
     }
 
     /*

@@ -21,17 +21,17 @@
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand ps-3" th:onclick="|window.location.href='/owner-dashboard'|">Trip Management</a>
+    <a class="navbar-brand ps-3" th:onclick="|window.location.href='/customer-dashboard'|">Trip Management</a>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
-    <button class="btn btn-outline-light" type="button" style="margin: 20px" th:onclick="|window.location.href='/show-all-vehicles'|">Cars</button>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/ride-history'|">Rides</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/booking-history'|">Bookings</button>
 <!--  rrr  <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>-->
+    <label class="text-light" th:text="${session.customer.customer_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
             <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" th:onclick="|window.location.href='/'|">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -40,28 +40,28 @@
 <div id="layoutSidenav_content" style="padding-top:80px">
     <main>
         <div class="w-100 container">
-            <form th:action="@{/add-credits-owner}" th:object="${credits}" method="post">
+            <form th:action="@{/add-credits-customer}" th:object="${credits}" method="post">
             <div class="paymentcard">
 <!--                <button class="proceed"><svg class="sendicon" width="24" height="24" viewBox="0 0 24 24">-->
                     <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
                 </svg></button>
                 <img src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png" class="logo-card">
                 <label class="text-secondary" style="color: white !important; opacity:1 !important">Card number:</label>
-                <input id="user" type="text" pattern="\d*"  class="input cardnumber" text-white placeholder="1234 5678 9101 1121" maxlength="16" minlength="16" required>
+                <input id="user" class="input cardnumber" text-white placeholder="1234 5678 9101 1121" type="text" pattern="\d*" maxlength="16" minlength="16" required>
                 <label class="text-secondary" style="color: white !important; opacity:1 !important">Name:</label>
                 <input class="input name" id="cardholdername" placeholder="Card Holder Name" required>
                 <label class="text-secondary" id="cvv" style="color: white !important; opacity:1 !important">CVV:</label>
-                <input class="input toleft ccv" placeholder="123" type="text" pattern="\d*"  maxlength="3" minlength="3" required>
+                <input class="input toleft ccv" placeholder="123" type="text" pattern="\d*" maxlength="3" minlength="3" required>
             </div>
             <div class="receipt">
                 <div class="col"><p>Available Credits:</p>
-                    <h2 class="cost" id="availabale_credits" th:text="'$'+${session.vehicleOwner.available_credits}"></h2><br>
+                    <h2 class="cost" id="availabale_credits" th:text="'$'+${session.customer.available_credits}"></h2><br>
                 </div>
                 <div class="col">
                     <p>Add Credit:</p>
 
                         <input class="form-control" id="add_credit" name="credits" type="number" placeholder=""/><br/>
-                        <input th:attr="name='userId'" th:value="${session.vehicleOwner.vehicleOwner_id}" type="hidden"/>
+                        <input th:attr="name='userId'" th:value="${session.customer.customer_id}" type="hidden"/>
                         <input class="btn btn-primary col-12 me-2" id="submitbtn" type="submit" value="Pay">
 
                 </div>
@@ -76,7 +76,7 @@
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:
-                        <label class="form-check-label" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
+                        <label class="form-check-label" th:text="${session.customer.customer_fname}"></label>
                     </div>
                 </div>
                 <div class="text-muted">Copyright &copy; Trip Management 2022</div>

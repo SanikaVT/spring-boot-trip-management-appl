@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.transaction.Transactional;
 
@@ -47,11 +46,13 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	@Transactional
 	public boolean saveRide(Booking booking) {
+		if(booking==null)
+			return false;
 		try {
 			logger.info("Inside saveRide method of BookingServiceImpl");
 			Trip trip = tripDAO.getTripDetails(booking.getTrip_id());
 			if ((trip.getSeats_remaining()) - booking.getSeats_booked() >= 0) {
-				booking.setCost(trip.getCost());
+				booking.setCost(trip.getCost()*booking.getSeats_booked());
 				booking.setTimestamp(trip.getStart_time());
 				booking.setIsPaid(0);
 				logger.info("There are available seats in the vehicle, attempting to book " + booking.getSeats_booked()
@@ -59,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.info("Successfully booked seats");
-					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
+					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+" to "+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
 							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
 					tripDAO.updateAvailableSeats(trip.getTrip_id(),
 							trip.getSeats_remaining() - booking.getSeats_booked());
@@ -82,6 +83,8 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> bookingList = bookedRidesDAO.getAllRidesForCustomer(customer_id);
 			List<Booking> upcomingBookings = new ArrayList<>();
 			for (Booking booking : bookingList) {
+				float cost=(float) Math.ceil(booking.getCost());
+				booking.setCost(cost);
 				String start_time = booking.getTimestamp().replace("T", " ");
 				booking.setTimestamp(Utility.convertDate(booking.getTimestamp()));
 				booking.setTrip(tripDAO.getTripDetails(booking.getTrip_id()));
@@ -105,6 +108,8 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
 			List<Booking> previousRides = new ArrayList<>();
 			for (Booking ride : allRides) {
+				float cost=(float) Math.ceil(ride.getCost());
+				ride.setCost(cost);
 				String start_time = ride.getTimestamp().replace("T", " ");
 				String current_time = Utility.getCurrentTime();
 				ride.setTimestamp(Utility.convertDate(ride.getTimestamp()));
@@ -123,23 +128,22 @@ public class BookingServiceImpl implements BookingService {
 
 	}
 
-	@Override
-	@Transactional
-	public boolean updateIsPaid(int customer_id) {
-		return bookedRidesDAO.updateIsPaid(customer_id);
-	}
 
 	@Override
 	@Transactional
 	public String payforRide(Booking booking) {
+		if(booking==null)
+			return ServiceStringMessages.FAILURE;
 		Customer customer=customerDAO.getCustomerById(booking.getCustomer_id());
 		int cost_credits=(int) Math.ceil(booking.getCost());
 		if(customer.getAvailable_credits()>= cost_credits)
 		{
-			bookedRidesDAO.updateIsPaid(customer.getCustomer_id());
+			bookedRidesDAO.updateIsPaid(customer.getCustomer_id(), booking.getBooked_ride_id());
 			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(tripDAO.getTripDetails(booking.getTrip_id()).getVehicle_owner_id());
-			vehicleOwnerDAO.updateAvaialableCredits(vehicleOwner.getVehicleOwner_id(), vehicleOwner.getAvailable_credits()+cost_credits);
-			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), customer.getAvailable_credits()-cost_credits);
+			int increment_credits=vehicleOwner.getAvailable_credits()+cost_credits;
+			int decrease_credits=customer.getAvailable_credits()-cost_credits;
+			vehicleOwnerDAO.updateAvaialableCredits(vehicleOwner.getVehicleOwner_id(), increment_credits);
+			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), decrease_credits);
 			return ServiceStringMessages.SUCCESS;
 		}
 		else

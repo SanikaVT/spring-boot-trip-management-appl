@@ -101,14 +101,18 @@ public class VehicleOwner {
 
     @Override
     public String toString() {
-        return "VehicleOwner{" +
-                ", vehicleowner_fname='" + vehicleowner_fname + '\'' +
-                ", vehicleowner_lname='" + vehicleowner_lname + '\'' +
-                ", phone='" + phone + '\'' +
-                ", available_credits='" + available_credits + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+        String query1 = "VehicleOwner{" +
+                ", vehicleowner_fname='" + vehicleowner_fname + '\'';
+        String query2 = ", vehicleowner_lname='" + vehicleowner_lname + '\'' +
+                ", phone='" + phone + '\'';
+        String query3 = ", available_credits='" + available_credits + '\'' +
+                ", email='" + email + '\'';
+        String query4 = ", password='" + password + '\'' +
                 '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4;
     }
 }
 

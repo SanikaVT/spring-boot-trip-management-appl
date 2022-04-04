@@ -104,15 +104,20 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "customer_id=" + customer_id +
-                ", customer_fname='" + customer_fname + '\'' +
-                ", customer_lname='" + customer_lname + '\'' +
-                ", mobile_no='" + mobile_no + '\'' +
-                ", available_seats='" + available_credits + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+        String query1 = "Customer{" +
+                "customer_id=" + customer_id;
+        String query2 = ", customer_fname='" + customer_fname + '\'';
+        String query3 = ", customer_lname='" + customer_lname + '\'' +
+                ", mobile_no='" + mobile_no + '\'';
+        String query4 = ", available_seats='" + available_credits + '\'' +
+                ", email='" + email + '\'';
+        String query5 = ", password='" + password + '\'' +
                 '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4 +
+                query5;
     }
 }
 

@@ -41,14 +41,14 @@
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
     <button class="btn btn-outline-light" type="button" style="margin: 20px" th:onclick="|window.location.href='/show-all-vehicles'|">Cars</button>
     <button class="btn btn-outline-light" type="button" style="margin-right: 20px" th:onclick="|window.location.href='/ride-history'|">Rides</button>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|">Credit</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.vehicleOwner.available_credits}+' Credit'"></span></button>
     <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
             <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" th:onclick="|window.location.href='/'|">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -214,7 +214,7 @@
 <!--                                                                <input class="form-control" id="fuel_economy_fuel_eco"-->
 <!--                                                                       name="fuel_consumed" type="text">-->
                                                                 <div class="input-group">
-                                                                    <input type="number" class="form-control" id="fuel_economy_fuel_eco" name="fuel_economy_fuel_eco"
+                                                                    <input type="number" class="form-control" id="fuel_economy_fuel_eco" name="fuel_consumed"
                                                                            placeholder="Total consumed fuel" min="0" max="10000" required>
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text"> liters </span>
@@ -239,6 +239,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div style="text-align: center;">
+                        <button class="btn btn-light" th:onclick="|window.location.href='/show-all-vehicles'|" type="button">Show All Cars
+                        </button>
                         </div>
                     </div>
 
@@ -265,7 +269,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${listOfVehicle}"
+                                                        <option th:each="vehicle : ${session.listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
@@ -350,7 +354,7 @@
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
                                 <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
-                                    <div class="card-wrapper">
+                                    <div class="card-wrapper" style="background: #e1f5fe !important;">
                                         <div class="ride-card-left">
                                         </div>
                                         <div class="card-details">

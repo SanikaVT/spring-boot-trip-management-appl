@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <title>Booking History</title>
+    <link rel="stylesheet" th:href="@{/styles/styles.css}"/>
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+>
+</head>
+<body class="sb-nav-toggled">
+<nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand ps-3" th:onclick="|window.location.href='/customer-dashboard'|">Trip Management</a>
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.customer.available_credits}+' Credit'"></span></button>
+    <label class="text-light" th:text="${session.customer.customer_fname}"></label>
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+               id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
+            <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" th:onclick="|window.location.href='/'|">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <br>
+                        <br>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Bookings</label>
+                                <div class="page-wrapper"  th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<3">
+                                    <form th:action="@{/pay-ride}" th:object="${booking}" method="post">
+                                        <!-- FIRST CARD -->
+                                        <!--                            <div class="">-->
+                                        <div th:classappend="${upcomingRide.isPaid==1?'card-wrapper-paid':'card-wrapper'}" style="width: 400px !important;">
+                                            <div class="ride-card-left">
+                                            </div>
+                                            <div class="card-details">
+
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <ride-h1 th:text="${upcomingRide.timestamp}"></ride-h1>
+                                                    </div>
+                                                    <div class="col-md-4" th:if="${upcomingRide.isPaid==0}">
+                                                        <!--                                                        <ride-h1 th:text="${previousRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>-->
+                                                        <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>
+                                                        <input th:attr="name='booked_ride_id'" th:value="${upcomingRide.booked_ride_id}" type="hidden"/>
+                                                        <input th:attr="name='trip_id'" th:value="${upcomingRide.trip_id}" type="hidden"/>
+                                                        <input th:attr="name='cost'" th:value="${upcomingRide.cost}" type="hidden"/>
+                                                        <input class="btn btn-light" type="submit" id="ridePayment" th:value="'Pay: '+${upcomingRide.cost}+'$'" style="margin: 0px !important;padding: 0px !important;font-size:14px;">
+                                                    </div>
+                                                    <div class="col-md-4" th:if="${upcomingRide.isPaid==1}">
+                                                        <!--                                                        <ride-h1 th:text="${previousRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>-->
+                                                        <ride-h1 th:text="'Paid: '+${upcomingRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.trip.source}+' to '+${upcomingRide.trip.destination}"></ride-h1>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <ride-h1 style="font-size:14px;color:#616161; padding-left:0px" th:text="'Seats: '+${upcomingRide.seats_booked}"></ride-h1>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end card-details -->
+
+                                            <!--                                            <div class="reveal-details" style="padding-top: 4px;">-->
+                                            <!--                                                <div class="row">-->
+                                            <!--                                                    <div class="col-md-6">-->
+                                            <!--                                                        <ride-h1>Book Seats:</ride-h1>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="col-md-2">-->
+                                            <!--                                                        <input type="number" class="form-control" id="booked_seats" name="seats_booked" min="1" th:max="${ride.trip.seats_remaining}" required="" style="margin: 0px !important;padding: 2px !important;">-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <input th:attr="name='trip_id'" th:value="${ride.trip.trip_id}" type="hidden"/>-->
+                                            <!--                                                    <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>-->
+                                            <!--                                                    <div class="col-md-4">-->
+                                            <!--                                                        <input class="btn btn-dark" type="submit" value="Book Ride" style="margin: 0px !important;padding: 2px !important;">-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
+                                            <!-- end reveal-details -->
+                                        </div>
+                                    </form><!-- end card-wrapper -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <br>
+                        <br>
+                        <div class="container-fluid">
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Bookings</label>
+                            <div class="page-wrapper"  th:each="previousRide, iterStat: ${session.previousRides}" th:if="${iterStat.index}<4">
+                                <form th:action="@{/pay-ride}" th:object="${booking}" method="post">
+                                    <!-- FIRST CARD -->
+                                    <!--                            <div class="">-->
+                                    <div th:classappend="${previousRide.isPaid==1?'card-wrapper-paid':'card-wrapper'}" style="width: 400px !important;">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <ride-h1 th:text="${previousRide.timestamp}"></ride-h1>
+                                                </div>
+                                                <div class="col-md-4" th:if="${previousRide.isPaid==0}">
+                                                    <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>
+                                                    <input th:attr="name='booked_ride_id'" th:value="${previousRide.booked_ride_id}" type="hidden"/>
+                                                    <input th:attr="name='trip_id'" th:value="${previousRide.trip_id}" type="hidden"/>
+                                                    <input th:attr="name='cost'" th:value="${previousRide.cost}" type="hidden"/>
+                                                    <!--                                                        <ride-h1 th:text="${previousRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>-->
+                                                    <input class="btn btn-light" type="submit" th:value="'Pay: '+${previousRide.cost}+'$'" style="margin: 0px !important;padding: 0px !important;font-size:14px;">
+                                                </div>
+                                                <div class="col-md-4" th:if="${previousRide.isPaid==1}">
+                                                    <!--                                                        <ride-h1 th:text="${previousRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>-->
+                                                    <ride-h1 th:text="'Paid: '+${previousRide.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.trip.source}+' to '+${previousRide.trip.destination}"></ride-h1>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <ride-h1 style="font-size:14px;color:#616161; padding-left:0px" th:text="'Seats: '+${previousRide.seats_booked}"></ride-h1>
+                                                </div>
+                                            </div>
+                                        </div><!-- end card-details -->
+
+                                        <!--                                            <div class="reveal-details" style="padding-top: 4px;">-->
+                                        <!--                                                <div class="row">-->
+                                        <!--                                                    <div class="col-md-6">-->
+                                        <!--                                                        <ride-h1>Book Seats:</ride-h1>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                    <div class="col-md-2">-->
+                                        <!--                                                        <input type="number" class="form-control" id="booked_seats" name="seats_booked" min="1" th:max="${ride.trip.seats_remaining}" required="" style="margin: 0px !important;padding: 2px !important;">-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                    <input th:attr="name='trip_id'" th:value="${ride.trip.trip_id}" type="hidden"/>-->
+                                        <!--                                                    <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>-->
+                                        <!--                                                    <div class="col-md-4">-->
+                                        <!--                                                        <input class="btn btn-dark" type="submit" value="Book Ride" style="margin: 0px !important;padding: 2px !important;">-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <!-- end reveal-details -->
+                                    </div>
+                                </form><!-- end card-wrapper -->
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <br>
+        </div>
+    </main>
+
+    <footer class="bg-dark mt-auto fixed-bottom" >
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:
+                        <label class="form-check-label" th:text="' '"></label>
+                    </div>
+                </div>
+                <div class="text-muted">Copyright &copy; Trip Management 2022</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+</div>
+</body>
+</html>

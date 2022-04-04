@@ -21,14 +21,32 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean addVehicle(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try {
-			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_economy() + "," + vehicle.getFuel_consumed()+ ",'"+vehicle.getBrand() +"','"+vehicle.getFuel_economy_status() + "');";
+			int vehicleowner_id = vehicle.getVehicleowner_id();
+			String number_plate = vehicle.getNumber_plate();
+			String vehicle_name = vehicle.getVehicle_name();
+			String type = vehicle.getType();
+			int trips = vehicle.getTrips();
+			float kms_driven = vehicle.getKms_driven();
+			int available_seats = vehicle.getAvailable_seats();
+			float fuel_economy = vehicle.getFuel_economy();
+			String fuel_economy_status = vehicle.getFuel_economy_status();
+			String brand = vehicle.getBrand();
+			float fuel_consumed = vehicle.getFuel_consumed();
+			String innerSubQuery1 = vehicleowner_id + ",'" + number_plate + "','" + vehicle_name + "','" + type + "'," + trips;
+			String subQuery1 = "insert into vehicle values(" + null + "," + innerSubQuery1;
+			String subQuery = fuel_economy + "," + fuel_consumed + ",'" + brand + "','" + fuel_economy_status;
+			String innerSubQuery2 = kms_driven + "," + available_seats + "," + subQuery + "');";
+			String sql = subQuery1 + "," + innerSubQuery2;
 			jdbcTemplate.update(sql);
 			logger.info("Vehicle successfully added.");
 			return true;
 		} catch (Exception exception){
 			logger.error("Error while adding Vehicle", exception);
 			return false;
+			
 		}
 
 	}
@@ -36,8 +54,9 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public Vehicle getVehicleDetails(int vehicle_id) {
 		try{
-			Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
-		BeanPropertyRowMapper.newInstance(Vehicle.class));
+			BeanPropertyRowMapper<Vehicle> rowMapper = BeanPropertyRowMapper.newInstance(Vehicle.class);
+			String sql = "select * from vehicle where vehicle_id=" + vehicle_id;
+			Vehicle vehicle=jdbcTemplate.queryForObject(sql,rowMapper);
 	   return vehicle;
 		}
 		catch(Exception e)
@@ -67,8 +86,14 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean updateVehicleFuelEconomy(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try{
-		String sql = "update vehicle set fuel_economy="+vehicle.getFuel_economy()+",kms_driven="+vehicle.getKms_driven()+",fuel_consumed="+vehicle.getFuel_consumed()+",fuel_economy_status='"+vehicle.getFuel_economy_status()+"' where vehicle_id="+vehicle.getVehicle_id();
+			String query1 = "update vehicle set fuel_economy=" + vehicle.getFuel_economy() + ",kms_driven=";
+			String s = ",fuel_economy_status='" + vehicle.getFuel_economy_status();
+			String query2 = s + "' where vehicle_id=" + vehicle.getVehicle_id();
+			String query3 = vehicle.getKms_driven() + ",fuel_consumed=" + vehicle.getFuel_consumed() + query2;
+			String sql = query1 + query3;
         jdbcTemplate.update(sql);
 		return true;
 		}

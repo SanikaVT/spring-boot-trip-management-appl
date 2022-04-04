@@ -10,5 +10,5 @@ public interface BookingDAO {
 
 	public List<Booking> getAllRidesForCustomer(int customer_id);
 
-	public boolean updateIsPaid(int customer_id);
+	public boolean updateIsPaid(int customer_id, int booked_ride_id);
 }

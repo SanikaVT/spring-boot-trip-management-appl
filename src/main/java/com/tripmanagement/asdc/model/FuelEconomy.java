@@ -107,15 +107,20 @@ public class FuelEconomy {
 
     @Override
     public String toString() {
-        return "FuelEconomy{" +
-                "trip_history_id=" + trip_history_id +
-                ", trip_id=" + trip_id +
-                ", kms_travelled=" + kms_travelled +
-                ", fuel_consumed=" + fuel_consumed +
-                ", fuel_economy=" + fuel_economy +
-                ", timestamp='" + timestamp + '\'' +
-                ", vehicle_id='" + vehicle_id + '\'' +
+        String query1 = "FuelEconomy{" +
+                "trip_history_id=" + trip_history_id;
+        String query2 = ", trip_id=" + trip_id +
+                ", kms_travelled=" + kms_travelled;
+        String query3 = ", fuel_consumed=" + fuel_consumed +
+                ", fuel_economy=" + fuel_economy;
+        String query4 = ", timestamp='" + timestamp + '\'';
+        String query5 = ", vehicle_id='" + vehicle_id + '\'' +
                 '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4 +
+                query5;
     }
 }
 

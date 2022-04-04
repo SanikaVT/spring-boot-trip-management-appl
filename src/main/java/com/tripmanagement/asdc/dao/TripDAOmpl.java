@@ -21,13 +21,17 @@ public class TripDAOmpl implements TripDAO {
 
 	@Override
 	public boolean saveTrip(Trip trip) {
-		if (trip == null)
+		if (trip == null||trip.getSource()==null)
 			return false;
 		try {
-			String sql = "insert into trip values(" + null + ",'" + trip.getSource() + "','" + trip.getDestination()
-					+ "'," + trip.getEstimated_kms() + "," + trip.getVehicle_id() + "," + trip.getKms_travelled() + ","
-					+ trip.getAvailable_seats() + ",'" + trip.getStart_time() + "','" + trip.getEnd_time() + "',"
-					+ trip.getSeats_remaining() + "," + trip.getCost() + ",'" + trip.getVehicle_owner_id() + "');";
+			String query1 = trip.getSource() + "','" + trip.getDestination()
+					+ "'," + trip.getEstimated_kms();
+			String query2 = trip.getVehicle_id() + "," + trip.getKms_travelled() + ","
+					+ trip.getAvailable_seats();
+			String query3 = trip.getStart_time() + "','" + trip.getEnd_time() + "',"
+					+ trip.getSeats_remaining();
+			String query4 = trip.getCost() + ",'" + trip.getVehicle_owner_id() + "');";
+			String sql = "insert into trip values(" + null + ",'" + query1 + "," + query2 + ",'" + query3 + "," + query4;
 			jdbcTemplate.update(sql);
 			return true;
 		} catch (Exception e) {

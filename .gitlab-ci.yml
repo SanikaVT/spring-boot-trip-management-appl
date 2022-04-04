@@ -30,6 +30,7 @@ build:
       - develop
       - merge_requests
       - main
+      - test
 
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
@@ -52,6 +53,7 @@ test:
       - develop
       - merge_requests
       - main
+      - test
 
 code_quality:
   stage: code_quality

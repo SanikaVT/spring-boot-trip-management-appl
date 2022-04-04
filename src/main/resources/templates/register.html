@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>Register - SB Admin</title>
+    <title>Register - Trip Management</title>
     <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
@@ -28,50 +28,66 @@
                             <div class="card-body">
                                 <form th:action="@{/register-user}" th:object="${user}" method="post">
                                     <div>
-                                        <input class="form-radio" id="selectVehicleOwner" name="userType" type="radio"
-                                               placeholder="Vehicle Owner" value="Vehicle Owner" checked="checked"/>
-                                        <label for="selectVehicleOwner">Vehicle Owner</label>
-                                        <input class="form-radio" id="selectCustomer" name="userType" type="radio"
-                                               placeholder="Customer" value="Customer"/>
-                                        <label for="selectCustomer">Customer</label>
+
+                                        <div class="form-radio">
+                                            <input class="form-check-input" id="selectVehicleOwner" type="radio" name="userType">
+                                            <label class="form-check-label" for="selectVehicleOwner">Vehicle Owner</label>
+                                        <div class="form-radio">
+                                            <input class="form-check-input" id="selectCustomer" type="radio" name="userType" checked>
+                                            <label class="form-check-label" for="selectCustomer">Customer</label>
+                                        </div>
+                                        <br/>
+<!--                                        <input class="form-radio" id="selectVehicleOwner" name="userType" type="radio"-->
+<!--                                               placeholder="Vehicle Owner" value="Vehicle Owner" checked="checked"/>-->
+<!--                                        <label for="selectVehicleOwner">Vehicle Owner</label>-->
+<!--                                        <input class="form-radio" id="selectCustomer" name="userType" type="radio"-->
+<!--                                               placeholder="Customer" value="Customer"/>-->
+<!--                                        <label for="selectCustomer">Customer</label>-->
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
                                                 <input class="form-control" id="first_name"
                                                        name="first_name" type="text"
-                                                       placeholder="Enter your first name"/>
+                                                       placeholder="Enter your first name" required/>
                                                 <label for="first_name">First name</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
                                                 <input class="form-control" id="last_name" name="last_name" type="text"
-                                                       placeholder="Enter your last name"/>
+                                                       placeholder="Enter your last name" required/>
                                                 <label for="last_name">Last name</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" name="email"
-                                               placeholder="name@example.com"/>
+                                        <input class="form-control" id="email" name="email" type="email"
+                                               placeholder="name@example.com" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                                               required=""/>
+                                        <div class="valid-feedback">Email field is valid!</div>
+                                        <div class="invalid-feedback">Email field cannot be blank!</div>
                                         <label for="email">Email address</label>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
                                                 <input class="form-control" id="password" name="password" type="password"
-                                                       placeholder="Create a password"/>
+                                                       placeholder="Create a password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
                                                 <label for="password">Password</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
                                                 <input class="form-control" id="inputPasswordConfirm" type="password"
-                                                       placeholder="Confirm password"/>
+                                                       placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
                                                 <label for="inputPasswordConfirm">Confirm Password</label>
                                             </div>
                                         </div>
+                                        <label class="text-secondary">* Must include one capital letter.</label>
+                                        <label class="text-secondary">* Must include one small letter.</label>
+                                        <label class="text-secondary">* Must include one special character.</label>
+                                        <label class="text-secondary">* Must include one digit value 0-9</label>
                                     </div>
                                     <div class="mt-4 mb-0">
                                         <div class="d-grid">

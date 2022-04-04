@@ -21,10 +21,15 @@ public class BookingDAOImpl implements BookingDAO {
 
 	@Override
 	public boolean saveRide(Booking booking) {
+		if(booking==null||booking.getTimestamp().isEmpty())
+			return false;
 		try {
-			String sql = "insert into booking values(" + null + "," + booking.getCustomer_id() + ",'"
-					+ booking.getTimestamp() + "'," + booking.getCost() + "," + booking.getSeats_booked() + ","
-					+ booking.getTrip_id() + "," + booking.getIsPaid() + ");";
+			String subQuery1 = booking.getCustomer_id() + ",'"
+					+ booking.getTimestamp() + "'," + booking.getCost();
+			String subQuery2 = booking.getSeats_booked() + ","
+					+ booking.getTrip_id() + "," + booking.getIsPaid();
+			String query = subQuery1 + "," + subQuery2;
+			String sql = "insert into booking values(" + null + "," + query + ");";
 			jdbcTemplate.update(sql);
 			logger.debug("Ride saved successfully");
 			return true;
@@ -51,9 +56,9 @@ public class BookingDAOImpl implements BookingDAO {
 	}
 
 	@Override
-	public boolean updateIsPaid(int customer_id) {
+	public boolean updateIsPaid(int customer_id, int booked_ride_id) {
 		try{
-			String sql = "update booking set isPaid=1 where customer_id="+customer_id;
+			String sql = "update booking set isPaid=1 where customer_id="+customer_id+" and booked_ride_id="+ booked_ride_id;
 			jdbcTemplate.update(sql);
 			return true;
 			}

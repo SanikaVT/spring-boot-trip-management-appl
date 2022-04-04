@@ -173,20 +173,27 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "vehicle_id=" + vehicle_id +
-                ", vehicleowner_id=" + vehicleowner_id +
-                ", number_plate='" + number_plate + '\'' +
-                ", vehicle_name='" + vehicle_name + '\'' +
-                ", type='" + type + '\'' +
-                ", trips=" + trips +
-                ", kms_driven=" + kms_driven +
-                ", available_seats=" + available_seats +
-                ", fuel_consumed=" + fuel_consumed +
-                ", fuel_economy=" + fuel_economy +
-                ", brand='" + brand + '\'' +
-                ", fuel_economy_status='" + fuel_economy_status + '\'' +
+        String query1 = "Vehicle{" +
+                "vehicle_id=" + vehicle_id;
+        String query2 = ", vehicleowner_id=" + vehicleowner_id +
+                ", number_plate='" + number_plate + '\'';
+        String query3 = ", vehicle_name='" + vehicle_name + '\'' +
+                ", type='" + type + '\'';
+        String query4 = ", trips=" + trips +
+                ", kms_driven=" + kms_driven;
+        String query5 = ", available_seats=" + available_seats +
+                ", fuel_consumed=" + fuel_consumed;
+        String query6 = ", fuel_economy=" + fuel_economy +
+                ", brand='" + brand + '\'';
+        String query7 = ", fuel_economy_status='" + fuel_economy_status + '\'' +
                 '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4 +
+                query5 +
+                query6 +
+                query7;
     }
 }
 

@@ -1,8 +1,6 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Trip;
-import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.model.*;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
@@ -10,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
+import java.util.List;
 
 
 @Controller
@@ -32,11 +31,14 @@ public class VehicleOwnerController {
     @PostMapping("/create-ride")
     public String createRide(Trip tripData, BindingResult result, Model model, HttpSession httpSession) {
         tripService.saveTrip(tripData);
-        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
+        int vehicleowner_id = vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id();
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleowner_id);
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
-        httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-        httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        List<Trip> previousTripsForVehicleOwner = tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+        httpSession.setAttribute("previousRides", previousTripsForVehicleOwner);
+        List<Trip> upcomingTripsForVehicleOwner = tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+        httpSession.setAttribute("upcomingRides", upcomingTripsForVehicleOwner);
         return "owner-dashboard";
     }
 
@@ -85,4 +87,13 @@ public class VehicleOwnerController {
         return "owner-dashboard";
     }
 
+    @PostMapping("/add-credits-owner")
+    public String addCreditsOwner(Credits credits, HttpSession session, Model model) {
+        System.out.println("credits "+credits.getCredits());
+        System.out.println("credits "+credits.getUserId());
+        vehicleOwnerService.buyCredits(credits.getUserId(), credits.getCredits());
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(credits.getUserId());
+        session.setAttribute("vehicleOwner", vehicleOwner);
+        return "payment";
+    }
 }

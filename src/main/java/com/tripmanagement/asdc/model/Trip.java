@@ -162,19 +162,26 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip{" +
-                "trip_id=" + trip_id +
-                ", source='" + source + '\'' +
-                ", destination='" + destination + '\'' +
-                ", vehicle_id=" + vehicle_id +
-                ", estimated_kms=" + estimated_kms +
-                ", kms_travelled=" + kms_travelled +
-                ", available_seats=" + available_seats +
-                ", start_time='" + start_time + '\'' +
-                ", end_time='" + end_time + '\'' +
-                ", seats_remaining=" + seats_remaining +
-                ", cost=" + cost +
-                ", vehicle_owner_id=" + vehicle_owner_id +
+        String query1 = "Trip{" +
+                "trip_id=" + trip_id;
+        String query2 = ", source='" + source + '\'' +
+                ", destination='" + destination + '\'';
+        String query3 = ", vehicle_id=" + vehicle_id +
+                ", estimated_kms=" + estimated_kms;
+        String query4 = ", kms_travelled=" + kms_travelled +
+                ", available_seats=" + available_seats;
+        String query5 = ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'';
+        String query6 = ", seats_remaining=" + seats_remaining +
+                ", cost=" + cost;
+        String query7 = ", vehicle_owner_id=" + vehicle_owner_id +
                 '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4 +
+                query5 +
+                query6 +
+                query7;
     }
 }

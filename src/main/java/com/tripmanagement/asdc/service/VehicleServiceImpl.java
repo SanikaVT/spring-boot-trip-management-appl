@@ -7,7 +7,8 @@ import com.tripmanagement.asdc.dao.FuelEconomyDAO;
 import com.tripmanagement.asdc.dao.VehicleDAO;
 import com.tripmanagement.asdc.model.FuelEconomy;
 import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.stringsAndConstants.FuelEconomyStatus;
+import com.tripmanagement.asdc.stringsAndConstants.Constants;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	@Transactional
 	public boolean addVehicle(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name().isEmpty())
+		return false;
 		try {
 			float economy = setFuel_economy(vehicle.getKms_driven(), vehicle.getFuel_consumed());
 			vehicle.setFuel_economy(economy);
@@ -70,6 +73,8 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	@Transactional
 	public boolean updateFuelEconomy(FuelEconomy fuelEconomy) {
+		if(fuelEconomy==null)
+		return false;
 		try{
 		float fuelEco=setFuel_economy(fuelEconomy.getKms_travelled(), fuelEconomy.getFuel_consumed());
 		fuelEconomy.setFuel_economy(fuelEco);
@@ -111,14 +116,16 @@ public class VehicleServiceImpl implements VehicleService {
 
 	private String getFuelEconomyStatus(float fuelEconomy) {
 		if (fuelEconomy > 13)
-			return FuelEconomyStatus.GOOD.name();
+			return Constants.GOOD;
 		else if (fuelEconomy < 8)
-			return FuelEconomyStatus.BAD.name();
-		else return FuelEconomyStatus.AVERAGE.name();
+			return Constants.BAD;
+		else return Constants.AVERAGE;
 	}
 
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuelEconomy) {
+		if(fuelEconomy==null)
+		return false;
 		try{
 		fuelEconomyDAO.saveFuelEconomy(fuelEconomy);
 		return true;

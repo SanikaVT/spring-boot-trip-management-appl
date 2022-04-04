@@ -117,9 +117,12 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booking [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
-                + ", timestamp=" + timestamp + ", seats_booked=" + seats_booked
-                + ", trip_id=" + trip_id + ", isPaid=" + isPaid + "]";
+        String query1 = "Booking [booked_ride_id=" + booked_ride_id + ", cost=" + cost;
+        String query2 = ", customer_id=" + customer_id
+                + ", timestamp=" + timestamp;
+        String query3 = ", seats_booked=" + seats_booked
+                + ", trip_id=" + trip_id + ", isPaid=" + isPaid;
+        return query1 + query2 + query3 + "]";
     }
 
 }

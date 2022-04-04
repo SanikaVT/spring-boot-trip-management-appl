@@ -1,6 +1,8 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
+import com.tripmanagement.asdc.stringsAndConstants.DAOStringMessages;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean saveCustomer(Customer customer) {
+        if(customer==null||customer.getCustomer_fname().isEmpty())
+			return false;
         try{
-        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"',"+customer.getAvailable_credits()+");";
+            String name = customer.getCustomer_fname() + "','" + customer.getCustomer_lname();
+            String innerSubQuery = ",'" + name + "','";
+            String subQuery1 = innerSubQuery + customer.getMobile_no() + "','";
+            String emailPassword = customer.getEmail() + "','" + customer.getPassword();
+            String subQuery2 = emailPassword + "'," + customer.getAvailable_credits() + ");";
+            String sql = "insert into customer values(" + null + subQuery1 + subQuery2;
         jdbcTemplate.update(sql);
         return true;
         }
