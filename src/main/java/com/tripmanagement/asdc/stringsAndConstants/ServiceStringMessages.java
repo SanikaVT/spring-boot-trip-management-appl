@@ -1,5 +1,7 @@
 package com.tripmanagement.asdc.stringsAndConstants;
 
+/*This class contains String messages called by the Service classes */
+
 public final class ServiceStringMessages {
     private ServiceStringMessages(){}
 

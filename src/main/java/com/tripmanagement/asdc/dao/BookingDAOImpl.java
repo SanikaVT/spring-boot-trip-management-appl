@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Class contains methods specific to database operations on booking table*/
 @Repository
 public class BookingDAOImpl implements BookingDAO {
 
@@ -19,6 +20,7 @@ public class BookingDAOImpl implements BookingDAO {
 
 	Logger logger = LoggerFactory.getLogger(BookingDAOImpl.class);
 
+	//This method is used to insert booking object into the database
 	@Override
 	public boolean saveRide(Booking booking) {
 		if(booking==null||booking.getTimestamp().isEmpty())
@@ -40,6 +42,7 @@ public class BookingDAOImpl implements BookingDAO {
 		}
 	}
 
+	//This method returns all booked rides specific to the customer
 	@Override
 	public List<Booking> getAllRidesForCustomer(int customer_id) {
 		List<Booking> rides = new ArrayList<>();
@@ -55,6 +58,7 @@ public class BookingDAOImpl implements BookingDAO {
 		}
 	}
 
+	//This method is used to update the IsPaid field to 1 when the customer pays for the ride
 	@Override
 	public boolean updateIsPaid(int customer_id, int booked_ride_id) {
 		try{

@@ -2,6 +2,8 @@ package com.tripmanagement.asdc.model;
 
 
 import javax.persistence.*;
+
+//Entity class for vehicleOwner table
 @Entity
 @Table(name="vehicleowner")
 public class VehicleOwner {

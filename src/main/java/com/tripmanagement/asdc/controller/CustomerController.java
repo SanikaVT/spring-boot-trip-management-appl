@@ -36,24 +36,9 @@ public class CustomerController {
     {
         String source = trip.getSource();
         String destination = trip.getDestination();
-        int availableRides = tripService.getAvailableTripsList(source, destination).size();
-        String numAvailableRides = "Available rides: " + availableRides;
-        System.out.println(availableRides);
-        model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
+        model.addAttribute("listOfRides", tripService.getAvailableTripsList(source,destination));
         return "customer-dashboard";
     }
-//
-//    @GetMapping("/get-booked-rides")
-//    public String getBookedRides(String customerId, Model model) {
-//        // call service with rideData
-//        return "";
-//    }
-//
-//    @GetMapping("/ride-history")
-//    public String getRideHistory(String customerId, Model model) {
-//
-//        return "";
-//    }
 
     @PostMapping("/book-ride")
     public String bookRide(Booking booking, HttpSession session, Model model) {
@@ -63,7 +48,7 @@ public class CustomerController {
         return "customer-dashboard";
     }
 
-    @RequestMapping(value = "/open-credit")
+    @RequestMapping(value = "/open-credit-customer")
     public String openCredit( Model model) {
         return "customer-credits";
     }
@@ -74,9 +59,21 @@ public class CustomerController {
         System.out.println("customer_id: "+booking.getCustomer_id());
 
         bookingService.payforRide(booking);
+        Customer customer = customerService.getCustomerById(booking.getCustomer_id());
+        session.setAttribute("customer", customer);
         session.setAttribute("upcomingRides", bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()));
         session.setAttribute("previousRides", bookingService.getPreviousRidesForCustomer(booking.getCustomer_id()));
         return "booking-history";
+    }
+
+    @PostMapping("/pay-booking")
+    public String payBooking(Booking booking, Model model, HttpSession session){
+        bookingService.payforRide(booking);
+        Customer customer = customerService.getCustomerById(booking.getCustomer_id());
+        session.setAttribute("customer", customer);
+        session.setAttribute("upcomingRides", bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()));
+        session.setAttribute("previousRides", bookingService.getPreviousRidesForCustomer(booking.getCustomer_id()));
+        return "customer-dashboard";
     }
 
     @RequestMapping("/booking-history")

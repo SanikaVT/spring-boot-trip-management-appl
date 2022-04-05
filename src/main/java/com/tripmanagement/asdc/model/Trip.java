@@ -2,6 +2,7 @@ package com.tripmanagement.asdc.model;
 
 import javax.persistence.*;
 
+//Entity class for trip table
 @Entity
 @Table(name = "Trip")
 public class Trip {

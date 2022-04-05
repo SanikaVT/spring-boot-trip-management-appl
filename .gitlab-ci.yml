@@ -31,6 +31,7 @@ build:
       - merge_requests
       - main
       - test
+      - unit_test_cases_dharmay
 
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
@@ -54,7 +55,7 @@ test:
       - merge_requests
       - main
       - test
-
+      - unit_test_cases_dharmay
 code_quality:
   stage: code_quality
   variables:

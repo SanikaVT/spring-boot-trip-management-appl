@@ -109,7 +109,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public boolean deleteVehicle(int vehicleId) {
 		try {
-			String sql = "delete from Vehicle where vehicle_id=" + vehicleId;
+			String sql = "delete from vehicle where vehicle_id=" + vehicleId;
 			jdbcTemplate.update(sql);
 			logger.info("Vehicle successfully deleted.");
 			return true;

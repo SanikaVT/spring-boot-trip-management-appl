@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
+/*Service class for Registration contains logic related to rregistration of a user. This class interacts with the registration DAO for database operations*/
 @Service
 public class RegistrationServiceImpl implements RegistrationService{
 
@@ -16,6 +16,7 @@ public class RegistrationServiceImpl implements RegistrationService{
     @Autowired
     RegistrationDAO registrationDAO;
 
+    //This method is used to validate the email and password using registraion DAO to interact with the database and returns the message accordingly
     @Override
     @Transactional
     public String checkEmailPassword(String email, String password) {
@@ -37,6 +38,7 @@ public class RegistrationServiceImpl implements RegistrationService{
         }
     }
 
+    //This method is used to check if the user exist in the database when the customer/vehicleOwner tries to register into the application
     @Override
     @Transactional
     public boolean checkUserExistByEmail(String email)

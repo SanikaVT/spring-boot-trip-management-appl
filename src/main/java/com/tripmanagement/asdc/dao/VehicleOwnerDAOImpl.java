@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*Class contains methods specific to database operations on vehicleOwner table*/
 @Repository
 public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
@@ -23,6 +24,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	Logger logger = LoggerFactory.getLogger(VehicleOwnerDAOImpl.class);
 
 
+	//This method is used to insert vehicleOwner object into the database
 	@Override
 	public boolean saveVehicleOwner(VehicleOwner vehicleOwner) {
 		if(vehicleOwner==null||vehicleOwner.getEmail()==null)
@@ -45,9 +47,9 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 			return false;
 
 		}
-		
 	}
 
+	//This method returns vehicleOwner by email
 	@Override
 	public VehicleOwner getVehicleOwnerByEmail(String email) {
 		if(email==null||email.isEmpty())
@@ -76,10 +78,10 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		{
 			logger.error("Error getting vehicleOwner by email ",e);
 			return null;
-
 		}
 	}
 
+	//This method returns vehicleOwner by Id
 	@Override
 	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId) {
 		try{
@@ -95,6 +97,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		}
 	}
 
+	//This method is used to update available credits of the vehicleOwner when the vehicleOwner pays for his ride or buys credits
 	@Override
     public boolean updateAvaialableCredits(int vehicleOwnerId, int available_credits) {
         try{
@@ -109,7 +112,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	
 			}
     }
-
 }
 
 

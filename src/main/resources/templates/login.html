@@ -3,26 +3,40 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Trip Management</title>
         <link th:href="@{/styles/styles.css}" rel="stylesheet" />
+        <link rel="icon" th:href="@{/images/trippy.svg}" type="image/x-icon">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript"> function preventBack() {window.history.forward();} setTimeout("preventBack()", 0); window.onunload = function () {null};</script>
+        <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2000);
+        </script>
     </head>
-    <body>
+    <body background="https://i.ibb.co/brsQ892/bg-final-login.jpg">
         <div id="layoutAuthentication">
+            <div th:if="!${message==null}">
+            <div style="width:400px; position: absolute; top: 20px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                 th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                 th:text="${message}" role="alert">
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            </div>
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Trip Management</h3></div>
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-header"><img th:src="@{/images/trippy.svg}" height="100px" width="100%"></div>
                                     <div class="card-body">
+                                        <h3 class="text-center font-weight-light my-4">Login</h3>
                                         <form th:action= "@{/dashboard}" th:object="${user}" method="post">
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="email" name="email" type="email" autocomplete="off" placeholder="name@example.com" required />
@@ -54,7 +68,7 @@
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="bg-dark mt-auto">
+                <footer class="bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Trip Management 2022</div>

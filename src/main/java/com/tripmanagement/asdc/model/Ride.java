@@ -1,5 +1,6 @@
 package com.tripmanagement.asdc.model;
 
+//POJO class to store ride details
 public class Ride {
     private Trip trip;
     private int vehicle_id;

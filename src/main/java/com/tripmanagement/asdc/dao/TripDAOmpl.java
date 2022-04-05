@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Class contains methods specific to database operations on trip table*/
 @Repository
 public class TripDAOmpl implements TripDAO {
 
@@ -19,6 +20,7 @@ public class TripDAOmpl implements TripDAO {
 
 	Logger logger = LoggerFactory.getLogger(TripDAOmpl.class);
 
+    //This method is used to insert trip object into the database
 	@Override
 	public boolean saveTrip(Trip trip) {
 		if (trip == null||trip.getSource()==null)
@@ -41,6 +43,7 @@ public class TripDAOmpl implements TripDAO {
 
 	}
 
+	//This method is used to get Trip details by trip id from trip table
 	@Override
 	public Trip getTripDetails(int trip_id) {
 		try {
@@ -54,6 +57,7 @@ public class TripDAOmpl implements TripDAO {
 		}
 	}
 
+	//This method is used to delete the trip
 	@Override
 	public boolean deleteTrip(int trip_id) {
 		try {
@@ -67,6 +71,7 @@ public class TripDAOmpl implements TripDAO {
 
 	}
 
+	//This method is used to get all available trips for customer when he  enters source and destination
 	@Override
 	public List<Trip> getAvailableTripsList(String source, String destination, String timestamp) {
 		List<Trip> trips = new ArrayList<>();
@@ -84,6 +89,7 @@ public class TripDAOmpl implements TripDAO {
 		}
 	}
 
+	//This method is used to get all trips of a vehicleOwner
 	@Override
 	public List<Trip> getAllTripsForVehicleOwner(int vehicleOwnerId) {
 		List<Trip> trips = new ArrayList<>();
@@ -98,6 +104,7 @@ public class TripDAOmpl implements TripDAO {
 		}
 	}
 
+	//This method queries and returns all distinct sources
 	@Override
 	public List<String> getSources() {
 		List<String> sources = new ArrayList<>();
@@ -111,6 +118,7 @@ public class TripDAOmpl implements TripDAO {
 		}
 	}
 
+	//This method queries and returns all dictinct destinations
 	@Override
 	public List<String> getDestinations() {
 		List<String> destinations = new ArrayList<>();
@@ -124,6 +132,7 @@ public class TripDAOmpl implements TripDAO {
 		}
 	}
 
+	//This method is used to update remaining seats when the booking is made by a customer
 	@Override
 	public boolean updateAvailableSeats(int trip_id, int seats_remaining) {
 		try {

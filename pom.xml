@@ -94,12 +94,12 @@
 			<version>5.8.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-   <groupId>org.junit.vintage</groupId>
-   <artifactId>junit-vintage-engine</artifactId>
-   <scope>test</scope>
-   <version>5.8.2</version>
-</dependency>
+<!--		<dependency>-->
+<!--   <groupId>org.junit.vintage</groupId>-->
+<!--   <artifactId>junit-vintage-engine</artifactId>-->
+<!--   <scope>test</scope>-->
+<!--   <version>5.8.2</version>-->
+<!--</dependency>-->
 
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -113,11 +113,11 @@
 			<version>RELEASE</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.5.2</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.junit.jupiter</groupId>-->
+<!--			<artifactId>junit-jupiter-engine</artifactId>-->
+<!--			<version>5.5.2</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>

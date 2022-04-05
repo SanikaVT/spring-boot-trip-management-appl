@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*Class contains methods specific to database operations on registraion/login of vehicleowner and customer*/
 @Repository
 public class RegistrationDAOImpl implements RegistrationDAO {
 
@@ -25,6 +25,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     Logger logger = LoggerFactory.getLogger(RegistrationDAOImpl.class);
 
 
+    //This method is used to valid if the customer/vehicleowner exits by his email
     @Override
     public boolean checkUserExistByEmail(String email) {
         if(email==null||email.isEmpty())
@@ -57,6 +58,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     }
 
 
+    //This method is used to valid the email and password of the customer/vehicleowner while authentication
     @Override
     public String checkEmailPassword(String email, String password) {
         if (password == null || email == null) {
@@ -102,41 +104,6 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     {
         logger.error("Error checking email and password",e);
         return null;
-    }
-    }
-
-
-    @Override
-    public boolean checkEmailExists(String email, String userType) {
-        if (email == null||userType == null) {
-            return false;
-        } else if (email.isEmpty() || userType.isEmpty()) {
-            return false;
-        }
-        try{
-        if (userType.equals(Constants.USER_TYPE_CUSTOMER)) {
-            String selectCustomerQuery = "select * from customer where email='" + email + "'";
-            Customer customer = jdbcTemplate.queryForObject(selectCustomerQuery,
-                    BeanPropertyRowMapper.newInstance(Customer.class));
-            if (customer != null && !customer.getEmail().isEmpty())
-                return true;
-            else
-                return false;
-        } else if (userType.equals(Constants.USER_TYPE_VEHICLE_OWNER)) {
-            String selectCarOwnerQuery = "select * from vehicleowner where email='" + email + "'";
-            BeanPropertyRowMapper<VehicleOwner> rowMapper = BeanPropertyRowMapper.newInstance(VehicleOwner.class);
-            VehicleOwner carOwner = jdbcTemplate.queryForObject(selectCarOwnerQuery,
-                    rowMapper);
-            if (carOwner != null && !carOwner.getEmail().isEmpty())
-                return true;
-            else
-                return false;
-        } else return false;
-    }
-    catch(Exception e)
-    {
-        logger.error("Error checking user exist by email",e);
-        return false;
     }
     }
 

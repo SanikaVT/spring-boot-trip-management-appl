@@ -14,8 +14,10 @@ public class NotificationServiceImpl implements NotificationService {
 	private JavaMailSender javaMailSender;
 
 	public boolean sendEmail(String message, String subject, String email) {
-		if(email==null||subject==null||message==null)
-		return false;
+		if(email==null||subject==null)
+			return false;
+		if(message==null)
+			return false;
 		try{
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(ServiceStringMessages.EMAIL_SENDER);

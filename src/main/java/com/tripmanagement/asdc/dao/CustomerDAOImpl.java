@@ -1,7 +1,6 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
-import com.tripmanagement.asdc.stringsAndConstants.DAOStringMessages;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*Class contains methods specific to database operations on customer table*/
 @Repository
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -23,6 +23,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	Logger logger = LoggerFactory.getLogger(CustomerDAOImpl.class);
 
+    //This method is used to insert customer object into the database
     @Override
     public boolean saveCustomer(Customer customer) {
         if(customer==null||customer.getCustomer_fname().isEmpty())
@@ -44,6 +45,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
 
+    //This method is used to get a customer by his email from the customer table
     @Override
     public Customer getCustomerByEmail(String email) {
         if(email==null||email.isEmpty())
@@ -75,6 +77,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
 
+    //This method is used to get a customer by his id from the customer table
     @Override
     public Customer getCustomerById(int id) {
         try{
@@ -90,6 +93,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
     }
 
+    //This method is used to update available credits of the customer when the customer pays for his ride or buys credits
     @Override
     public boolean updateAvaialableCredits(int customer_id, int available_credits) {
         try{

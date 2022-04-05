@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -44,7 +43,7 @@ public class VehicleOwnerController {
 
 
     @PostMapping("/add-vehicle")
-    public String addVehicle(Vehicle vehicle, Model model) {
+    public String addVehicle(Vehicle vehicle, Model model, HttpSession session) {
         System.out.println("getVehicle_name: " + vehicle.getVehicle_name());
         System.out.println("getNumber_plate: " + vehicle.getNumber_plate());
         System.out.println("getType: " + vehicle.getType());
@@ -58,8 +57,8 @@ public class VehicleOwnerController {
         else
             model.addAttribute("addVehicleStatus", "Vehicle adding failed");
         VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicle.getVehicleowner_id());
-        model.addAttribute("vehicleOwner", vehicleOwner);
-        model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        session.setAttribute("vehicleOwner", vehicleOwner);
+        session.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
         return "owner-dashboard";
     }
 
@@ -72,7 +71,6 @@ public class VehicleOwnerController {
 
     @RequestMapping(value = "/open-owner-credit")
     public String openCredit( Model model) {
-
         return "payment";
     }
 

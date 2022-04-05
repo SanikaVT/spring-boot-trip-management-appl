@@ -77,7 +77,11 @@ public class RegistrationController {
                 }
             }
         }
-        return "login";
+        else {
+            model.addAttribute("messageStatus","FAILURE");
+            model.addAttribute("message","User does not exists, please register.");
+            return "login";
+        }
     }
 
     /*
@@ -85,7 +89,7 @@ public class RegistrationController {
      * */
     @RequestMapping("/forgot-password")
     public String forgotPassword() {
-        return "forgot-password";
+        return "forgot";
     }
 
     /*
@@ -100,7 +104,7 @@ public class RegistrationController {
     @PostMapping("/register-user")
     public String registerUser(User user, BindingResult result, Model model) {
         if(!registrationService.checkUserExistByEmail(user.getEmail())) {
-            if (user.getUserType().equals("Vehicle Owner"))
+            if (user.getUserType().equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER))
                 vehicleOwnerService.saveVehicleOwner(user);
             else
                 customerService.saveCustomer(user);
