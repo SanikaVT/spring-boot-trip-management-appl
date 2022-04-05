@@ -2,7 +2,7 @@ package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.Constants;
+import com.tripmanagement.asdc.stringsAndConstants.DAOConstants;
 import com.tripmanagement.asdc.stringsAndConstants.DAOStringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,9 +94,9 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         });
 
         if (vehicleOwner != null && !vehicleOwner.getEmail().isEmpty())
-            return Constants.USER_TYPE_VEHICLE_OWNER;
+            return DAOConstants.USER_TYPE_VEHICLE_OWNER;
         else if (customer != null && !customer.getEmail().isEmpty())
-            return Constants.USER_TYPE_CUSTOMER;
+            return DAOConstants.USER_TYPE_CUSTOMER;
         else
             return DAOStringMessages.INCORRECT_AUTH;
     }

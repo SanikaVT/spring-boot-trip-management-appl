@@ -3,7 +3,7 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.Constants;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceConstants;
 import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 		vehicleOwner.setVehicleowner_lname(user.getLast_name());
 		vehicleOwner.setEmail(user.getEmail());
 		vehicleOwner.setPassword(user.getPassword());
-			vehicleOwner.setAvailable_credits(Constants.INITIAL_CREDITS);
+			vehicleOwner.setAvailable_credits(ServiceConstants.INITIAL_CREDITS);
 		boolean isSuccess=vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
 		if(isSuccess) {
 			String message = vehicleOwner.getVehicleowner_fname() + ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY;

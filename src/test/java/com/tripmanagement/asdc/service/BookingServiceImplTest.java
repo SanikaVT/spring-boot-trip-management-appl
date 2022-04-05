@@ -118,6 +118,6 @@ class BookingServiceImplTest {
         booking.setTrip_id(107);
         booking.setIsPaid(1);
         booking.setTrip(new Trip());
-        assertEquals(bookingService.payforRide(booking),"Success");
+        assertEquals(bookingService.payforRide(booking),"Payment successfully done!");
     }
 }

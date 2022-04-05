@@ -2,7 +2,7 @@ package com.tripmanagement.asdc.controller;
 
 import com.tripmanagement.asdc.model.*;
 import com.tripmanagement.asdc.service.*;
-import com.tripmanagement.asdc.stringsAndConstants.Constants;
+import com.tripmanagement.asdc.stringsAndConstants.ControllerConstants;
 import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
 import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class RegistrationController {
                 model.addAttribute("message",message);
                 return "login";
             } else {
-                if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
+                if (message.equalsIgnoreCase(ControllerConstants.USER_TYPE_VEHICLE_OWNER)) {
                     VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
                     httpSession.setAttribute("vehicleOwner", vehicleOwner);
                     httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
@@ -105,7 +105,7 @@ public class RegistrationController {
     @PostMapping("/register-user")
     public String registerUser(User user, BindingResult result, Model model) {
         if(!registrationService.checkUserExistByEmail(user.getEmail())) {
-            if (user.getUserType().equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER))
+            if (user.getUserType().equalsIgnoreCase(ControllerConstants.USER_TYPE_VEHICLE_OWNER))
                 vehicleOwnerService.saveVehicleOwner(user);
             else
                 customerService.saveCustomer(user);

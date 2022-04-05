@@ -8,8 +8,8 @@ import com.tripmanagement.asdc.dao.VehicleDAO;
 import com.tripmanagement.asdc.model.ChartData;
 import com.tripmanagement.asdc.model.FuelEconomy;
 import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.stringsAndConstants.Constants;
 
+import com.tripmanagement.asdc.stringsAndConstants.ServiceConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,10 +127,10 @@ public class VehicleServiceImpl implements VehicleService {
 	//This method is used to get Fuel economy status based on the value of the fuel economy
 	private String getFuelEconomyStatus(float fuelEconomy) {
 		if (fuelEconomy > 13)
-			return Constants.GOOD;
+			return ServiceConstants.GOOD;
 		else if (fuelEconomy < 8)
-			return Constants.BAD;
-		else return Constants.AVERAGE;
+			return ServiceConstants.BAD;
+		else return ServiceConstants.AVERAGE;
 	}
 
 	//This method interacts with Fuel economy DAO to save new fuel economy in fuelEconomy table

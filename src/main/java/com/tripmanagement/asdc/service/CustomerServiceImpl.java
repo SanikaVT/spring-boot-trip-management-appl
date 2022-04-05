@@ -5,7 +5,8 @@ import javax.transaction.Transactional;
 import com.tripmanagement.asdc.dao.CustomerDAO;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.User;
-import com.tripmanagement.asdc.stringsAndConstants.Constants;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceConstants;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceImplConstants;
 import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setCustomer_lname(user.getLast_name());
 		customer.setEmail(user.getEmail());
 		customer.setPassword(user.getPassword());
-		customer.setAvailable_credits(Constants.INITIAL_CREDITS);
+		customer.setAvailable_credits(ServiceImplConstants.INITIAL_CREDITS);
 		boolean isSuccess= customerDAO.saveCustomer(customer);
 		if(isSuccess)
 		{
