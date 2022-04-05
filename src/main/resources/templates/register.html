@@ -12,7 +12,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
     <link rel="icon" th:href="@{/images/trippy.svg}" type="image/x-icon">
-
+    <script>
+        function matchPassword() {
+            var pw1 = document.getElementById("password");
+            var pw2 = document.getElementById("inputPasswordConfirm");
+            if(pw1 != pw2)
+            {
+                alert("Passwords did not match");
+                document.getElementById("submit").
+            } else {
+                alert("Password created successfully");
+            }
+        }
+    </script>
 </head>
 <body background="https://i.ibb.co/brsQ892/bg-final-login.jpg">
 <div id="layoutAuthentication">
@@ -86,13 +98,14 @@
                                                 <label for="inputPasswordConfirm">Confirm Password</label>
                                             </div>
                                         </div>
+                                        <label class="text-secondary" size="10px" hidden></label>
                                         <label class="text-secondary" size="10px">* Must include one capital letter, small letter.</label>
                                         <label class="text-secondary">* Must include one special character, one digit value 0-9.</label>
                                     </div>
                                     <div class="mt-4 mb-0">
                                         <div class="d-grid">
 
-                                            <input class="btn-primary" type="submit" value="Create Account">
+                                            <input class="btn-primary" type="submit" value="Create Account" id="submit" onclick="matchPassword()">
                                             <!--                                                    <a class="btn btn-primary btn-block" th:href="@{register-vehicle-owner}">Create Account</a>-->
 
                                         </div>
