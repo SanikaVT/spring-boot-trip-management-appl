@@ -37,6 +37,23 @@ class VehicleDAOImplTest {
         assertTrue(vehicleDAO.addVehicle(vehicle));
     }
     @Test
+    void testaddVehicleException() {
+        Vehicle vehicle= new Vehicle();
+        vehicle.setVehicle_id(11111111);
+        vehicle.setVehicle_name("testcasePleaseignore\'");
+        vehicle.setFuel_economy(2222);
+        vehicle.setBrand("testing");
+        vehicle.setVehicleowner_id(11111);
+        vehicle.setFuel_economy_status("good");
+        vehicle.setNumber_plate("TESTCASE1");
+        vehicle.setType("Sedan");
+        vehicle.setTrips(99);
+        vehicle.setKms_driven(2020);
+        vehicle.setAvailable_seats(4);
+        vehicle.setFuel_consumed(123);
+        assertFalse(vehicleDAO.addVehicle(vehicle));
+    }
+    @Test
     void testaddVehicle_false(){
 
         assertFalse(vehicleDAO.addVehicle(null));
@@ -98,6 +115,24 @@ class VehicleDAOImplTest {
         vehicle.setFuel_consumed(123);
         assertTrue(vehicleDAO.updateVehicleFuelEconomy(vehicle));
     }
+    @Test
+    void testupdateVehicleFuelEconomyException(){
+        Vehicle vehicle= new Vehicle();
+        vehicle.setVehicle_id(11111111);
+        vehicle.setVehicle_name("testcasePleaseignore");
+        vehicle.setFuel_economy(2222);
+        vehicle.setBrand("testing");
+        vehicle.setVehicleowner_id(11111);
+        vehicle.setFuel_economy_status("good\'");
+        vehicle.setNumber_plate("TESTCASE1");
+        vehicle.setType("Sedan");
+        vehicle.setTrips(99);
+        vehicle.setKms_driven(2020);
+        vehicle.setAvailable_seats(4);
+        vehicle.setFuel_consumed(123);
+        assertFalse(vehicleDAO.updateVehicleFuelEconomy(vehicle));
+    }
+
     @Test
     void testupdateVehicleFuelEconomyNull(){
         Vehicle vehicle = null;

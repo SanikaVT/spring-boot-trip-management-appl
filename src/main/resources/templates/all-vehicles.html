@@ -17,6 +17,12 @@
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2500);
+        </script>
     <script>
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
             icons: {
@@ -101,6 +107,13 @@ var radarChartKm = new Chart(kmCanvas, {
         <div class="container-fluid">
             <br>
             <br>
+            <div th:if="!${message==null}">
+                <div style="width:400px; position: absolute; top: 70px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                     th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                     th:text="${message}" role="alert">
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1" style="width: 5%;"></div>
@@ -194,6 +207,9 @@ var radarChartKm = new Chart(kmCanvas, {
                         </div>
                         <div class="container-fluid">
                             <div class="row">
+                                <div th:if="${#lists.size(session.listOfVehicle)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Vehicles Available, Please add a Vehicle</label>
+                                </div>
                                 <div class="col-md-4" th:each="vehicle: ${session.listOfVehicle}">
                                     <div class="containerCard">
                                         <div class="containerCard">
@@ -332,6 +348,8 @@ var radarChartKm = new Chart(kmCanvas, {
             </div>
         </div>
     </footer>
+    <br>
+    <br>
 </div>
 
 <script crossorigin="anonymous"

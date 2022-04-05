@@ -58,6 +58,45 @@ class BookingServiceImplTest {
         assertTrue(bookingService.saveRide(booking));
 
     }
+    @Test
+    void testSaveinCorrectRide() {
+        Trip trip=new Trip();
+        trip.setTrip_id(56);
+        trip.setSource("Bangalore");
+        trip.setDestination("Mysore");
+        trip.setVehicle_id(1111);
+        trip.setEstimated_kms(555);
+        trip.setKms_travelled(50);
+        trip.setAvailable_seats(4);
+        trip.setStart_time("2022-03-31T16:42");
+        trip.setEnd_time("2022-04-03T16:42");
+        trip.setSeats_remaining(8);
+        trip.setCost(1000);
+        trip.setVehicle_owner_id(1111);
+        Booking booking = new Booking(30,40,"2022-03-31",55,9,105,111,trip);
+        //Booking booking=new Booking(100, "test_source", "test_destination", 2, 4, 3, 3, "2022-01-01", 20, 23);
+        assertFalse(bookingService.saveRide(booking));
+    }
+
+    @Test
+    void testSaveRideException() {
+        Trip trip=new Trip();
+        trip.setTrip_id(56);
+        trip.setSource("Bangalore\'");
+        trip.setDestination("Mysore");
+        trip.setVehicle_id(1111);
+        trip.setEstimated_kms(555);
+        trip.setKms_travelled(50);
+        trip.setAvailable_seats(4);
+        trip.setStart_time("01-01-2022");
+        trip.setEnd_time("01-01-2023");
+        trip.setSeats_remaining(8);
+        trip.setCost(1000);
+        trip.setVehicle_owner_id(1111);
+        Booking booking = new Booking(30,40,"2022-03-31",55,9,105,111,trip);
+        //Booking booking=new Booking(100, "test_source", "test_destination", 2, 4, 3, 3, "2022-01-01", 20, 23);
+        assertFalse(bookingService.saveRide(booking));
+    }
 
     @Test
     void testgetPreviousTripsForCorrectCustomer() {
@@ -73,7 +112,7 @@ class BookingServiceImplTest {
         Booking booking=new Booking();
         booking.setBooked_ride_id(35);
         booking.setCustomer_id(41);
-        booking.setTimestamp("2022-03-31");
+        booking.setTimestamp("2022-04-03T16:42");
         booking.setCost(1);
         booking.setSeats_booked(2);
         booking.setTrip_id(107);

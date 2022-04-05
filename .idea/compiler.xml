@@ -14,7 +14,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Trip_Management_System_Group_16" options="" />
+      <module name="Trip_Management_System_Group_16" options="-parameters" />
       <module name="asdc" options="-parameters" />
     </option>
   </component>

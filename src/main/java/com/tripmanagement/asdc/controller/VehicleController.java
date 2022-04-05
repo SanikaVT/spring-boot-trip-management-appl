@@ -8,6 +8,7 @@ import com.tripmanagement.asdc.service.BookingService;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
+import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,15 @@ public class VehicleController {
     VehicleService vehicleService;
 
     @PostMapping("/add-fuel-economy")
-    public String updateFuelEconomy(FuelEconomy fuelEconomy, ModelAndView model, HttpSession httpSession) {
-        vehicleService.updateFuelEconomy(fuelEconomy);
+    public String updateFuelEconomy(FuelEconomy fuelEconomy, Model model, HttpSession httpSession) {
+        if(vehicleService.updateFuelEconomy(fuelEconomy)){
+            model.addAttribute("messageStatus", ControllerStringMessages.SUCCESS_STATUS);
+            model.addAttribute("message",ControllerStringMessages.TRIP_DETAILS);
+        }
+        else {
+            model.addAttribute("messageStatus", ControllerStringMessages.FAILURE_STATUS);
+            model.addAttribute("message",ControllerStringMessages.ERROR_OCCURRED);
+        }
         int vehicleOwnerId = vehicleService.getVehicleDetails(fuelEconomy.getVehicle_id()).getVehicleowner_id();
         httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwnerId));
         return "owner-dashboard";
@@ -34,7 +42,14 @@ public class VehicleController {
 
     @PostMapping("/add-trip")
     public String addTripDetailsAll(FuelEconomy fuelEconomy, Model model, HttpSession httpSession) {
-        vehicleService.updateFuelEconomy(fuelEconomy);
+        if(vehicleService.updateFuelEconomy(fuelEconomy)){
+            model.addAttribute("messageStatus", ControllerStringMessages.SUCCESS_STATUS);
+            model.addAttribute("message",ControllerStringMessages.TRIP_DETAILS);
+        }
+        else {
+            model.addAttribute("messageStatus", ControllerStringMessages.FAILURE_STATUS);
+            model.addAttribute("message",ControllerStringMessages.ERROR_OCCURRED);
+        }
         int vehicleOwnerId = vehicleService.getVehicleDetails(fuelEconomy.getVehicle_id()).getVehicleowner_id();
         httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwnerId));
         getChartData(vehicleOwnerId, model);
@@ -49,10 +64,14 @@ public class VehicleController {
 
     @PostMapping("/add-new-vehicle")
     public String addNewVehicle(Vehicle vehicle, Model model, HttpSession session) {
-        if (vehicleService.addVehicle(vehicle))
-            model.addAttribute("addVehicleStatus", "Vehicle added successfully");
-        else
-            model.addAttribute("addVehicleStatus", "Vehicle adding failed");
+        if(vehicleService.addVehicle(vehicle)){
+            model.addAttribute("messageStatus", ControllerStringMessages.SUCCESS_STATUS);
+            model.addAttribute("message",ControllerStringMessages.CAR_ADDED);
+        }
+        else {
+            model.addAttribute("messageStatus", ControllerStringMessages.FAILURE_STATUS);
+            model.addAttribute("message",ControllerStringMessages.ERROR_OCCURRED);
+        }
         session.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicle.getVehicleowner_id()));
         getChartData(vehicle.getVehicleowner_id(), model);
         return "all-vehicles";

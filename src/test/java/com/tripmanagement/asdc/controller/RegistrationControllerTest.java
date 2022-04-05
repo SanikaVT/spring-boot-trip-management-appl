@@ -9,12 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestController {
+public class RegistrationControllerTest {
 
 
 
@@ -77,6 +74,21 @@ public class TestController {
 
         }
 
+    @Test
+    public void testUserloginWithEmailNotExist() throws Exception {
+        when(registrationService.checkUserExistByEmail(any())).thenReturn(false);
+        mockMvc.perform(post("/dashboard"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"));
+
+    }
+    @Test
+    public void testbasePage() throws Exception {
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"));
+    }
     @Test
     public void testUserloginVehicleOwner() throws Exception {
         when(registrationService.checkUserExistByEmail(any())).thenReturn(true);
@@ -126,15 +138,15 @@ public class TestController {
     @Test
     public void testregisterUserNewVehicleOwner() throws Exception {
         when(registrationService.checkUserExistByEmail(any())).thenReturn(false);
-        mockMvc.perform(post("/register-user").param("userType","Vehicle Owner"))
+        mockMvc.perform(post("/register-user").param("userType","Vehicle_Owner"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
 
     @Test
-    public void testRegisterUserNew() throws Exception {
+    public void testRegisterUserNewCustomer() throws Exception {
         when(registrationService.checkUserExistByEmail(any())).thenReturn(false);
-        mockMvc.perform(post("/register-user").param("userType","Vehicle Owner"))
+        mockMvc.perform(post("/register-user").param("userType","Customer"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }

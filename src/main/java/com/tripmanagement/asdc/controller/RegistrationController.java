@@ -47,7 +47,8 @@ public class RegistrationController {
         if(registrationService.checkUserExistByEmail(user.getEmail())) {
             String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
             if (message.equalsIgnoreCase(ControllerStringMessages.INCORRECT_AUTH)) {
-                httpSession.setAttribute("error_message", message);
+                model.addAttribute("messageStatus","FAILURE");
+                model.addAttribute("message",message);
                 return "login";
             } else {
                 if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
@@ -108,10 +109,13 @@ public class RegistrationController {
                 vehicleOwnerService.saveVehicleOwner(user);
             else
                 customerService.saveCustomer(user);
+            model.addAttribute("messageStatus", ControllerStringMessages.SUCCESS_STATUS);
+            model.addAttribute("message",ControllerStringMessages.ACCOUNT_CREATED);
             return "login";
         }
         else {
-            model.addAttribute("error_message", ServiceStringMessages.USER_ALREADY_EXIST);
+            model.addAttribute("messageStatus", ControllerStringMessages.FAILURE_STATUS);
+            model.addAttribute("message", ServiceStringMessages.USER_ALREADY_EXIST);
             return "register";
         }
     }

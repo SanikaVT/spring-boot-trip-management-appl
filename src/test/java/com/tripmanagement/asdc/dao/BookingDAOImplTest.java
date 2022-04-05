@@ -21,7 +21,7 @@ public class BookingDAOImplTest {
     void testSaverideCorrect() {
         Booking booking = new Booking();
         booking.setCustomer_id(4);
-        booking.setTimestamp("2022-04-01");
+        booking.setTimestamp("2022-03-31T16:42");
         booking.setCost(1);
         booking.setSeats_booked(0);
         booking.setTrip_id(1);
@@ -33,6 +33,18 @@ public class BookingDAOImplTest {
     void testSaverideIncorrect() {
         Booking booking = new Booking();
         booking.setTimestamp("");
+        assertFalse(bookingDAO.saveRide(booking));
+    }
+
+    @Test
+    void testSaverideException(){
+        Booking booking = new Booking();
+        booking.setCustomer_id(4);
+        booking.setTimestamp("2022-04-01\'");
+        booking.setCost(1);
+        booking.setSeats_booked(0);
+        booking.setTrip_id(1);
+        booking.setIsPaid(0);
         assertFalse(bookingDAO.saveRide(booking));
     }
 

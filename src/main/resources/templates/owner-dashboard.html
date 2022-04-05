@@ -15,8 +15,14 @@
     <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2500);
+        </script>
     <script>
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
             icons: {
@@ -58,8 +64,16 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
-            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
+            <br>
+            <br>
+            <br>
+            <div th:if="!${message==null}">
+                <div style="width:400px; position: absolute; top: 70px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                     th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                     th:text="${message}" role="alert">
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
@@ -151,6 +165,9 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
+                                <div th:if="${#lists.size(session.listOfVehicle)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Vehicles Available, Please add a New Vehicle</label>
+                                </div>
                                 <div class="col-md-4" th:each="vehicle,iterStat: ${session.listOfVehicle}" th:if="${iterStat.index}<3">
                                     <div class="containerCard">
                                         <div class="containerCard">
@@ -332,6 +349,9 @@
                         <div class="container-fluid">
                             <div style="height:220px">
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Rides</label>
+                                <div th:if="${#lists.size(session.upcomingRides)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Upcoming Rides Available</label>
+                                </div>
                                 <div th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<3" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${upcomingRide.source}+'  '+${upcomingRide.destination}"></label>-->
                                     <div class="card-wrapper">
@@ -354,6 +374,9 @@
                             </div>
                             <div>
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
+                                <div th:if="${#lists.size(session.previousRides)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Previous Rides Available</label>
+                                </div>
                                 <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
                                     <div class="card-wrapper" style="background: #e1f5fe !important;">
@@ -401,6 +424,8 @@
         </div>
     </footer>
 </div>
+<br>
+<br>
 </div>
 <script crossorigin="anonymous"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

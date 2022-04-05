@@ -31,6 +31,18 @@ class FuelEconomyDAOImplTest {
     }
 
     @Test
+    void testsaveFuelEconomyException() {
+        FuelEconomy fuelEconomy = new FuelEconomy();
+        fuelEconomy.setTrip_history_id(1);
+        fuelEconomy.setTrip_id(0);
+        fuelEconomy.setKms_travelled(9);
+        fuelEconomy.setFuel_economy(99);
+        fuelEconomy.setTimestamp("2022-03-29\'");
+        fuelEconomy.setVehicle_id(1);
+        assertFalse(fuelEconomyDAO.saveFuelEconomy(fuelEconomy));
+    }
+
+    @Test
     void testsaveFuelEconomyEmpty() {
 //        FuelEconomy fuelEconomy = new FuelEconomy();
 //        fuelEconomy.setTimestamp("");

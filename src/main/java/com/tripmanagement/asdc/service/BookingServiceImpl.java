@@ -143,12 +143,12 @@ public class BookingServiceImpl implements BookingService {
 	@Transactional
 	public String payforRide(Booking booking) {
 		if(booking==null)
-			return ServiceStringMessages.FAILURE;
+			return ServiceStringMessages.ERROR_OCCURRED;
 		Customer customer=customerDAO.getCustomerById(booking.getCustomer_id());
 		int cost_credits=(int) Math.ceil(booking.getCost());
 		Trip trip=tripDAO.getTripDetails(booking.getTrip_id());
 		if(trip==null||customer==null)
-			return ServiceStringMessages.FAILURE;
+			return ServiceStringMessages.ERROR_OCCURRED;
 		if(customer.getAvailable_credits()>= cost_credits)
 		{
 			bookedRidesDAO.updateIsPaid(customer.getCustomer_id(), booking.getBooked_ride_id());
@@ -158,7 +158,7 @@ public class BookingServiceImpl implements BookingService {
 			int decrease_credits=customer.getAvailable_credits()-cost_credits;
 			vehicleOwnerDAO.updateAvaialableCredits(vehicle_owner_id, increment_credits);
 			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), decrease_credits);
-			return ServiceStringMessages.SUCCESS;
+			return ServiceStringMessages.PAYMENT_COMPLETE;
 		}
 		else
 		{

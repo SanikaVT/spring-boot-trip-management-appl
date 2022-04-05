@@ -16,7 +16,9 @@ public final class ServiceStringMessages {
     public static final String RIDE_BOOKED_SUCCESSFULLY="Your ride is booked successfully from ";
     public static final String RIDE_CREATED="Ride Created Successfully!";
     public static final String RIDE_BOOKED="Ride Booked Successfully!";
-    public static final String PLEASE_BUY_CREDITS = "Please buy credits first";
+    public static final String PLEASE_BUY_CREDITS = "You don't have enough available credits";
     public static final String EMAIL_SENDER = "tripmanagementasdc@gmail.com";
+    public static final String ERROR_OCCURRED = "Some error occurred, please try again";
+    public static final String PAYMENT_COMPLETE = "Payment successfully done!";
 
 }

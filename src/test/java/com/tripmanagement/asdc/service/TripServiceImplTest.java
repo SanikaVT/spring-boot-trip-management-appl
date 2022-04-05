@@ -39,6 +39,14 @@ class TripServiceImplTest {
         trip.setVehicle_id(47);
         trip.setSource("test_source");
         trip.setDestination("test_destination");
+        trip.setStart_time("2022-03-31T16:42");
+        trip.setEnd_time("2022-04-02T16:42");
+        trip.setVehicle_owner_id(2);
+        trip.setCost(55);
+        trip.setEstimated_kms(55);
+        trip.setKms_travelled(55);
+        trip.setAvailable_seats(4);
+
         assertTrue(tripService.saveTrip(trip));
     }
 
@@ -59,7 +67,7 @@ class TripServiceImplTest {
 
     @Test
     void testGetCorrectUpcomingTripsForVehicleOwner() {
-        assertTrue(tripService.getUpcomingTripsForVehicleOwner(14).size()>=0);
+        assertTrue(tripService.getUpcomingTripsForVehicleOwner(72).size()>=0);
     }
 
     @Test
@@ -69,37 +77,37 @@ class TripServiceImplTest {
 
     @Test
     void testGetCorrectPreviousTripsForVehicleOwner() {
-        assertTrue(tripService.getPreviousTripsForVehicleOwner(12).size()>=0);
+        assertTrue(tripService.getPreviousTripsForVehicleOwner(72).size()>=0);
     }
 
     @Test
     void testGetWrongPreviousTripsForVehicleOwner_false() {
-        assertTrue(tripService.getPreviousTripsForVehicleOwner(00).size()<=0);
+        assertTrue(tripService.getPreviousTripsForVehicleOwner(-1).size()<=0);
     }
 
     @Test
     void testGetAvailableTripsList() {
-        assertTrue(tripService.getAvailableTripsList("Halifax","Lucknow").size()>=0);
+        assertTrue(tripService.getAvailableTripsList("source1","destination1").size()>=0);
     }
 
     @Test
     void testGetAvailableTripsListWithNullSource() {
-        assertNull(tripService.getAvailableTripsList(null,"Lucknow"));
+        assertNull(tripService.getAvailableTripsList(null,"test_destination"));
     }
 
     @Test
     void testGetAvailableTripsListWithNullDestination() {
-        assertNull(tripService.getAvailableTripsList("Halifax",null));
+        assertNull(tripService.getAvailableTripsList("test_source",null));
     }
 
     @Test
     void testGetAvailableTripsListWithEmptySource() {
-        assertNull(tripService.getAvailableTripsList("","Lucknow"));
+        assertNull(tripService.getAvailableTripsList("","test_destination"));
     }
 
     @Test
     void testGetAvailableTripsListWithEmptyDestination() {
-        assertNull(tripService.getAvailableTripsList("Halifax",""));
+        assertNull(tripService.getAvailableTripsList("test_source",""));
     }
 
     @Test

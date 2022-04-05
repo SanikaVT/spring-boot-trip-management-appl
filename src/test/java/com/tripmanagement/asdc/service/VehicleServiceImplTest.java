@@ -79,5 +79,15 @@ class VehicleServiceImplTest {
         assertTrue(vehicleService.getVehicles(71).size()>0);
     }
 
+    @Test
+    void testgetVehicleUseChart()
+    {
+        assertTrue(vehicleService.getVehicleUseChart(47).size()>0);
+    }
 
+    @Test
+    void testgetFuelConsumedChart()
+    {
+        assertTrue(vehicleService.getFuelConsumedChart(47).size()>0);
+    }
 }

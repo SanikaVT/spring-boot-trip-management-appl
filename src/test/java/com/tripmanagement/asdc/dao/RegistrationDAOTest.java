@@ -77,7 +77,12 @@ class RegistrationDAOTest {
     }
 
     @Test
-    void testCheckCorrectEmailPassword() {
-        assertTrue(registrationDAO.checkEmailPassword("svt@gmail.com", "qwerty123") != null);
+    void testCheckCorrectEmailPasswordvehicleOwner() {
+        assertTrue(registrationDAO.checkEmailPassword("test1@case.com", "1234567") != null);
+    }
+
+    @Test
+    void testCheckCorrectEmailPasswordCustomer() {
+        assertTrue(registrationDAO.checkEmailPassword("testing@case.com", "123456789") != null);
     }
 }

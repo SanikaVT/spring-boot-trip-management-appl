@@ -51,6 +51,10 @@ class VehicleOwnerDAOImplTest {
         assertNotNull(vehicleOwnerDAO.getVehicleOwnerByEmail("test1@case.com"));
     }
     @Test
+    void testGetVehicleOwnerByEmailException() {
+        assertNull(vehicleOwnerDAO.getVehicleOwnerByEmail("test1@case.com\'"));
+    }
+    @Test
     void testGetWrongVehicleOwnerbyEmail() {
         assertNull(vehicleOwnerDAO.getVehicleOwnerByEmail("test1@test1.test1"));
     }

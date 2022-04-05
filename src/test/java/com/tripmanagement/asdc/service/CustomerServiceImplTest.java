@@ -56,6 +56,18 @@ class CustomerServiceImplTest {
 
         assertTrue(customerService.saveCustomer(user));
     }
+    @Test
+    void testSaveCustomerException() {
+
+        User user = new User();
+        user.setFirst_name("test\'");
+        user.setLast_name("case");
+        user.setEmail("test@case.com");
+        user.setPassword("1234563");
+        user.setUserType("CUSTOMER");
+
+        assertFalse(customerService.saveCustomer(user));
+    }
 
     @Test
     void testSaveCustomerIllegaleName() {
@@ -89,6 +101,11 @@ class CustomerServiceImplTest {
         when(customerDAO.getCustomerByEmail(email)).thenReturn(customer);
         Customer result = customerService.getCustomerByEmail(email);
         assertTrue(result!=null);
+    }
+
+    @Test
+    void testgetCustomerByEmailException(){
+        assertTrue(customerService.getCustomerByEmail("hhjdhs\'")==null);
     }
     @Test
     void testGetCustomerByIllegalEmail() {
