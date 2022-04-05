@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <title>Dashboard - Trip Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/styles/styles.css}"/>
+    <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        setTimeout(function() {
+    $('#alertDiv').fadeOut('fast');
+}, 1500); // <-- time in milliseconds
+
+    </script>
+</head>
+<body>
+<h1>TEST YOLO</h1>
+
+<!--<div class="alert alert-secondary alert-icon" role="alert">-->
+<!--    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>-->
+<!--    <div class="alert-icon-aside">-->
+<!--        <i data-feather="feather"></i>-->
+<!--    </div>-->
+<!--    <div class="alert-icon-content">-->
+<!--        <h6 class="alert-heading">Danger Icon Alert</h6>-->
+<!--        This alert uses an icon from Feather Icons!-->
+<!--    </div>-->
+<!--</div>-->
+
+<div style="width:400px; position: absolute; top: 0;right: 0;" id="alertDiv" class="alert alert-pink alert-solid" th:text="message" role="alert">
+    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+</body>
+</html>
